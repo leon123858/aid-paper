@@ -512,18 +512,18 @@
 % - \setCJKmonofont{}			中文等寬字體
 %
 
-%\ifthenelse{\equal{\ntu@fontset}{template}}{
-%  \setmainfont{Times New Roman}[
-%    Path = \ntu@path@font ,
-%    Extension = .ttf ,
-%    BoldFont = *-Bold ,
-%    ItalicFont = *-Italic ,
-%    BoldItalicFont = *-BoldItalic, ]
-%  \setCJKmainfont{BiauKai}[
-%    Path = \ntu@path@cjkfont ,
-%    Extension = .ttf ,
-%    BoldFont = Kaiti-Black, ]
-%}
+\ifthenelse{\equal{\ntu@fontset}{template}}{
+ \setmainfont{Times New Roman}[
+   Path = \ntu@path@font ,
+   Extension = .ttf ,
+   BoldFont = *-Bold ,
+   ItalicFont = *-Italic ,
+   BoldItalicFont = *-BoldItalic, ]
+ \setCJKmainfont{BiauKai}[
+   Path = \ntu@path@cjkfont ,
+   Extension = .ttf ,
+   BoldFont = Kaiti-Black, ]
+}
 
 % [顏色設定]
 %
