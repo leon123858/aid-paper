@@ -6,16 +6,21 @@ this is my master paper in NTU.
 
 step
 
-1. use docker pull Latex Image: `docker pull ghcr.io/xu-cheng/texlive-full`
+1. use docker pull Latex Image: `docker pull leon1234858/my-latex-live`
 2. install extension named `James-Yu.latex-workshop` in vs-code.
 3. Open your VS Code Settings as JSON and add the following lines.
 
+note: original registry is `docker pull ghcr.io/xu-cheng/texlive-full`
+
 ```
 "latex-workshop.docker.enabled": true,
-"latex-workshop.docker.image.latex": "ghcr.io/xu-cheng/texlive-full",
+"latex-workshop.docker.image.latex": "leon1234858/my-latex-live",
 "latex-workshop.latex.recipe.default": "latexmk (xelatex)",
 "latex-workshop.latex.outDir": "./.out",
 "latex-workshop.latex.autoBuild.run": "never",
+"[latex]": {
+	"editor.defaultFormatter": "James-Yu.latex-workshop"
+},
 ```
 
 compile
