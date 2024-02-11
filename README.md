@@ -14,7 +14,8 @@ step
 "latex-workshop.docker.enabled": true,
 "latex-workshop.docker.image.latex": "ghcr.io/xu-cheng/texlive-full",
 "latex-workshop.latex.recipe.default": "latexmk (xelatex)",
-"latex-workshop.latex.outDir": "./.out"
+"latex-workshop.latex.outDir": "./.out",
+"latex-workshop.latex.autoBuild.run": "never",
 ```
 
 compile
