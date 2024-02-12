@@ -8,7 +8,7 @@ step
 
 1. use docker pull Latex Image: `docker pull leon1234858/my-latex-live`
 2. install extension named `James-Yu.latex-workshop` in vs-code.
-3. Open your VS Code Settings as JSON and add the following lines.
+3. Open your VS Code Settings(`setting.json`) and add the following lines.
 
 note: original registry is `docker pull ghcr.io/xu-cheng/texlive-full`
 
@@ -19,8 +19,9 @@ note: original registry is `docker pull ghcr.io/xu-cheng/texlive-full`
 "latex-workshop.latex.outDir": "./.out",
 "latex-workshop.latex.autoBuild.run": "never",
 "[latex]": {
-	"editor.defaultFormatter": "James-Yu.latex-workshop"
-},
+	"editor.defaultFormatter": "James-Yu.latex-workshop",
+	"editor.wordWrap": "on"
+}
 ```
 
 compile
