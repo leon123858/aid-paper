@@ -2,6 +2,10 @@
 
 this is my master paper in NTU.
 
+## How to download this paper
+
+[click here](https://leon123858.github.io/aid-paper/)
+
 ## How to setup vs-code as Latex editor
 
 step
