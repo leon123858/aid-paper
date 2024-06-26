@@ -42,15 +42,8 @@ jobs:
           path: main.pdf
       - name: Create Static Page
         run: |
-          mkdir dist
-          echo "Creating static page... for $pdf_url"
-          echo "<html><body>" > dist/index.html
-          echo "<h1>Download PDF</h1>" >> dist/index.html
-          echo "<p>Click the link below to download the PDF:</p>" >> dist/index.html
-          echo "<a href=$pdf_url>Download PDF</a>" >> dist/index.html
-          echo "</body></html>" >> dist/index.html
-        env:
-          pdf_url: ${{ steps.upload-pdf.outputs.artifact-url }}
+          mkdir -p dist
+          cat web/web.html | sed 's|__PDF_URL__|${{ steps.upload-pdf.outputs.artifact-url }}|g' > dist/index.html
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
