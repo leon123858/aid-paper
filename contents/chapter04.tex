@@ -116,7 +116,75 @@ Consensus Core 的設計還考慮到了系統的可擴展性和互操作性。�
 
 \section{重要流程分析}
 \subsection{AID 生成}
-\subsection{AID 的 MFA 驗證}
+
+在自主身份（Autonomous Identity，AID）系統中，AID 作為普適性的數字身份標識符，具有高度的靈活性和適應性，萬事萬物皆可以用 AID 來識別。根據實際應用需求，AID 的生成方式可以有顯著差異。本實作重點驗證了兩種主要的 AID 使用場景：
+
+\subsubsection{用戶自主生成 AID}
+
+在這種場景下，用戶可以在個人設備上直接生成並管理多個別名關聯的 AID。這種方法的關鍵特徵如下：
+
+\begin{itemize}
+  \item \textbf{多因素認證（MFA）}: 用戶需要通過 MFA 來證明對 AID 的合法持有權。
+  \item \textbf{元數據嵌入}: AID 生成過程中，除了基於 UUID（Universally Unique Identifier）規範產生的識別號外，還需要嵌入輔助 MFA 驗證的元數據（meta data）。
+  \item \textbf{元數據類型}: 典型的元數據包括但不限於：
+        \begin{itemize}
+          \item 手機號碼
+          \item 電子郵件地址
+          \item 其他可用於身份驗證的資料...
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{服務提供商生成 AID}
+
+在另一種場景中，當用戶在特定服務中註冊別名時，供應商為了方便管理相同別名的用戶，會額外生成 AID 在內部取代別名用來完成用戶識別：
+
+\begin{itemize}
+  \item \textbf{服務端管理}: AID 由服務提供商生成並管理。
+  \item \textbf{用戶便利性}: 用戶只需記住自己的別名，無需直接管理 AID。
+  \item \textbf{責任劃分}: 服務提供商承擔 AID 管理的責任，簡化了用戶的操作流程。
+\end{itemize}
+
+\subsubsection{AID 生成的通用原則}
+
+無論採用哪種生成方式，AID 的創建過程都遵循以下原則：
+
+\begin{enumerate}
+  \item \textbf{基於 UUID 規範}: AID 的核心識別號需遵循 UUID 規範，確保全局唯一性。
+  \item \textbf{情境相關元數據}: 根據具體使用情境，在生成過程中同步創建所需的元數據。
+  \item \textbf{區塊鏈記錄}: 將 AID 中需要公開的部分信息通過區塊鏈智能合約進行記錄。這一步驟旨在：
+        \begin{itemize}
+          \item 確保 AID 的唯一性
+          \item 保證 AID 信息的不可篡改性
+          \item 提供去中心化的公開驗證機制
+        \end{itemize}
+\end{enumerate}
+
+通過這種設計，AID 系統能夠在保證安全性和可信度的同時，為不同的應用場景提供靈活的身份管理解決方案。這種方法不僅滿足了現代數字身份管理的需求，還為未來更複雜的身份認證場景提供了可擴展的框架。
+
+\subsection{AID 中基於 RBA 的 MFA 驗證}
+
+在本實作中，系統對所有用戶的登入操作以及對應用程式中人工智慧（Artificial Intelligence，AI）功能的訪問進行全面監控。系統記錄包括裝置指紋（Device Fingerprint）與網際協定（IP）地址等元數據（Metadata）。這些數據將被應用於風險基礎認證（Risk-Based Authentication，RBA）演算法，以評估每次操作的風險程度。當計算得出的風險程度超過預設閾值時，系統將自動啟動多因素認證（Multi-Factor Authentication，MFA）流程，要求用戶進行額外的身份驗證。此外，當系統檢測到用戶執行高風險行為時，會通過持續要求 MFA 驗證來提高用戶的可信度。
+
+一個典型的風險評估範例如下：當用戶嘗試登入時，系統讀取當前用戶的裝置指紋和 IP 地址，並檢索該用戶前幾次登入的同類數據。通過比對這些數據，系統可以識別潛在的異常行為，例如 IP 不應該在不同國家或是裝置不該一直切換。若發現顯著差異，系統將要求額外的 MFA 驗證。以下提供了一個簡化的 MFA 觸發演算法示例：
+
+\begin{algorithm}
+  \caption{MFA 觸發決策演算法範例}
+  \begin{algorithmic}[1]
+    \Function{needMFA}{uMeta, opMeta, preRec}
+    \If{uMeta $\equiv$ preRec.uMeta}
+    \If{opMeta $\approx$ preRec.opMeta}
+    \State \Return false
+    \Else
+    \State \Return true
+    \EndIf
+    \EndIf
+    \State \Return true
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
+
+其中，$\equiv$ 表示完全等同，$\approx$ 表示近似相等。此演算法通過比較用戶空間元數據和當前操作元數據與先前記錄的數據來決定是否需要觸發 MFA。此方法能有效地平衡安全性和用戶體驗，為系統提供了靈活且強大的身份驗證機制。
+
 \subsection{別名在服務器上註冊}
 \subsection{別名在服務器上登入}
 \subsection{AID 遷移}
