@@ -2,19 +2,128 @@
 
 \chapter{系統實作}
 
+本研究已成功實現了系統的核心功能，並在受控的測試環境中進行了全面的概念驗證（Proof of Concept, PoC）。系統架構由三個關鍵模塊組成：AID Server、Wallet 和 Consensus Core
+
 \section{各模塊說明}
-\subsection{AID Server}
+本節將詳細介紹系統的核心架構,包括AID Wallet、AID Server和Consensus Core三個主要模塊。表\ref{tab:core-operations}概述了每個模塊支持的核心操作。
+
+\begin{table}[htbp]
+  \centering
+  \caption{系統各模塊支持的核心操作}
+  \label{tab:core-operations}
+  \begin{tabular}{|l|l|l|}
+    \hline
+    \textbf{AID Wallet} & \textbf{AID Server} & \textbf{Consensus Core} \\
+    \hline
+    AID Generation      & AID Register        & Set AID Owner           \\
+    MFA Login           & AID Login           & Set AID Manager         \\
+    Set User Data       & MFA                 & Get AID Owner           \\
+    Load User Data      & RBA                 & Get AID Manager         \\
+    Wallet Migration    & AID Migration       &                         \\
+    \hline
+  \end{tabular}
+\end{table}
+
+AID Wallet模塊是用戶與系統交互的主要界面。它支持以下核心功能：
+\begin{itemize}
+  \item \textbf{AID Generation}: 生成新的去中心化身份標識符。
+  \item \textbf{MFA Login}: 實現多因素認證登錄。
+  \item \textbf{Set User Data}: 允許用戶設置和更新存在個人設備的數據。
+  \item \textbf{Load User Data}: 從個人設備中加載用戶數據。
+  \item \textbf{Wallet Migration}: 支持錢包遷移功能,確保用戶數據的可攜性。
+\end{itemize}
+
+AID Server 作為系統的中央服務器,負責處理身份驗證和數據管理。其主要功能包括：
+
+\begin{itemize}
+  \item \textbf{AID Register}: 註冊新的去中心化身份。
+  \item \textbf{AID Login}: 處理用戶的登錄請求。
+  \item \textbf{MFA}: 實現多因素認證機制。
+  \item \textbf{RBA}: 執行基於風險的認證。
+  \item \textbf{AID Migration}: 管理身份遷移過程。
+\end{itemize}
+
+Consensus Core模塊負責維護系統的一致性和安全性。它提供以下關鍵操作：
+
+\begin{itemize}
+  \item \textbf{Set AID Owner}: 設置或更新AID的所有者。
+  \item \textbf{Set AID Manager}: 指定AID的管理者。
+  \item \textbf{Get AID Owner}: 檢索AID的當前所有者信息。
+  \item \textbf{Get AID Manager}: 獲取AID的管理者信息。
+\end{itemize}
+
+這三個模塊協同工作,共同構成了一個安全、可靠且靈活的去中心化身份管理系統。AID Wallet提供用戶友好的用戶端接口, AID Server 作為後端服務的一部分處理核心的身份驗證和數據管理任務,最後 Consensus Core 則確保整個系統的一致性和可信度。
+
 \subsection{Wallet}
-\subsection{BlockChain}
-\subsection{Frontend SDK}
-\subsection{Backend SDK}
+
+本研究中的 Wallet 模塊是一個基於 Flutter 框架開發的跨平台網絡前端應用,為用戶提供了一個直觀且功能豐富的圖形用戶界面 (GUI)。該模塊的設計和實現不僅展示了系統的可擴展性和互操作性,還凸顯了與其他系統組件的無縫集成能力。
+
+Wallet 應用與 AID Server 進行了深度集成,這種集成體現了系統的模塊化設計理念,主要表現在以下幾個方面:
+
+\begin{itemize}
+  \item \textbf{身份驗證機制}: 利用 AID Server 提供的去中心化身份驗證機制,實現了符合 W3C 標準的安全可靠的用戶登錄流程。這種方法不僅提高了系統的安全性,還增強了用戶隱私保護。
+  \item \textbf{別名系統}: 實現了基於別名的登錄功能,這種設計不僅增強了用戶體驗的便捷性,還提供了額外的隱私保護層,使用戶能夠在不暴露真實身份的情況下進行身份驗證。
+  \item \textbf{去中心化身份管理}: 用戶可以在應用內創建新的去中心化身份 (AID) 或註冊新的別名,這種設計體現了系統的自主性和靈活性,使用戶能夠更好地控制自己的數字身份。
+\end{itemize}
+
+Wallet 應用的核心功能模塊包括:
+
+\begin{enumerate}
+  \item \textbf{用戶認證模塊}: 實現了基於 AID Server 的安全登錄機制,支持多因素認證和風險基礎認證 (RBA)。
+  \item \textbf{AI 對話模塊}: 集成了符合微軟 AI 聊天規範的對話界面,為用戶提供了基於自然語言處理 (NLP) 的智能交互體驗。
+  \item \textbf{去中心化身份管理模塊}: 允許用戶創建、管理和恢復多個去中心化身份 (AIDs),實現了符合 W3C DID 規範的身份管理功能。
+  \item \textbf{別名註冊與管理模塊}: 提供了直觀的界面,用於註冊和管理用戶別名,增強了系統的可用性和用戶隱私保護。
+\end{enumerate}
+
+綜上所述,Wallet 模塊作為 AID 系統的前端範例,不僅通過與 AID Server 的緊密集成,為用戶提供了一個安全、便捷的去中心化身份驗證平台,還成功整合了最新的 AI 技術規範。這一實現不僅證明了 AID 身份驗證系統在實際應用中替代當前中心化第三方登入系統的可行性,還為未來的去中心化身份管理和 AI 輔助服務的結合提供了寶貴的實踐經驗。
+
+\subsection{AID Server}
+
+本研究中的 AID Server 是一個基於 Golang 開發的高性能 Web API 服務器，其設計旨在提供自主身份認證（Autonomous Identity，AID）系統的核心功能。AID Server 的實現不僅體現了 AID 系統的特殊交互機制，還嵌入了第三方服務的後端功能，以驗證 AID 系統替代當前主流 OpenID 驗證系統的可行性。選擇 Golang 作為主要開發語言基於其卓越的並發處理能力、跨平台兼容性以及豐富的標準庫。特別是，Golang 的協程（Goroutine）機制能夠有效處理高並發請求，確保系統在高負載環境下保持穩定性能。
+
+AID Server 實現了一系列核心功能，涵蓋自主身份（Autonomous Identity，AID）管理、數據存儲、人工智能集成以及用戶行為分析。在 AID 管理方面，系統支持創建、存儲和管理多重身份，每個身份可關聯多個別名，從而增強系統靈活性和用戶隱私保護。數據存儲採用了嵌入式數據庫解決方案，結合 LevelDB 和 SQLite，既簡化了部署流程，又為未來向完全去中心化應用擴展奠定了基礎。LevelDB 主要用於高性能鍵值存儲，而 SQLite 則處理需要複雜查詢的結構化數據。通過集成微軟的 OpenAI API，AID Server 提供了符合微軟 AI 聊天規範的接口，使 Wallet 模塊能夠無縫接入先進的自然語言處理功能。此外，系統還記錄和分析用戶的時空操作數據，為實施風險基礎認證（Risk-Based Authentication，RBA）算法提供了堅實的數據基礎。
+
+在安全機制方面，AID Server 實現了多層次的保護策略。基於收集的用戶行為數據，系統能夠實時評估每次操作的風險程度，實現動態的 RBA。當檢測到高風險操作時，系統會自動觸發額外的身份驗證流程。AID Server 還支持多種多因素認證（Multi-Factor Authentication，MFA）方法，包括但不限於硬體驗證和基於時間的一次性密碼（Time-based One-Time Password，TOTP）等。系統提供了靈活的 API 接口，便於未來集成新的 MFA 方法。此外，所有敏感數據在存儲前均經過加密處理，確保即使在數據泄露情況下，用戶的隱私信息也不會輕易被獲取。
+
+在去中心化架構方面，AID Server 通過與 Consensus Core 模塊的緊密集成，實現了 AID 所有權和管理權的分布式設置與查詢。通過 Consensus Core 提供的 API 接口，AID Server 能夠建立跨節點的 AID 關聯，實現了 AID 的分布式管理。這種設計不僅增強了系統的去中心化特性，還為未來的横向擴展提供了技術基礎。
+
+總括而言，AID Server 作為 AID 系統的核心組件，不僅提供了高效、安全的身份管理功能，還通過集成先進的安全機制，為去中心化身份認證系統的發展奠定了堅實的理論和技術基礎。
+
+\subsection{Consensus Core}
+
+本研究中的 Consensus Core 模塊基於 Bitcoin 區塊鏈的硬分叉 OurChain 平台開發而成,是一套創新的智能合約系統。其設計旨在為自主身份 (Autonomous Identity, AID) 管理系統提供分布式一致性和安全性保障。OurChain 是由我們開發出來的強大的區塊鏈平台,具有高性能、低功耗和高安全性的特點。Consensus Core 模塊通過與 OurChain 平台的深度集成,為 AID 系統提供了一個安全、可靠的共識機制,確保了整個系統的一致性和可信度。
+
+在 AID 生成過程中,Consensus Core 利用 OurChain 的共識機制確保每個 AID 的唯一性和不可篡改性。這種基於區塊鏈的共識過程具有以下優勢:
+
+\begin{itemize}
+  \item 有效抵禦潛在的網絡攻擊
+  \item 維護整個系統的完整性和可信度
+  \item 為跨節點的 AID 操作提供可靠的信任基礎
+\end{itemize}
+
+Consensus Core 作為 AID 系統的信任錨點,使用戶能夠自主控制其數字身份在多個節點間的遷移和存在。這種設計理念帶來了多重效益:
+
+\begin{enumerate}
+  \item 增強了系統的去中心化特性
+  \item 賦予用戶對其數字身份的完全自主權
+  \item 通過區塊鏈技術實現分布式信任
+  \item 有效解決傳統中心化身份管理系統面臨的單點故障和信任集中化問題
+\end{enumerate}
+
+Consensus Core 的設計還考慮到了系統的可擴展性和互操作性。通過標準化的智能合約接口,該模塊為未來整合不同 AID Server 的實作預留了可能性,進一步增強了 AID 系統的適應性和兼容性。
+
+綜上所述,Consensus Core 模塊通過創新性地使用區塊鏈技術和智能合約,為去中心化身份管理提供了一個強大而靈活的基礎架構，有望在數字身份、隱私保護和去中心化應用等領域產生深遠影響。
 
 \section{重要流程分析}
 \subsection{AID 生成}
+\subsection{AID 的 MFA 驗證}
+\subsection{別名在服務器上註冊}
+\subsection{別名在服務器上登入}
 \subsection{AID 遷移}
-\subsection{目標 AID Server 的鎖定}
+\subsection{跨 AID Server 的驗證}
 
 \section{與現有方法之比較}
+\subsection{GDPR}
+\subsection{別名優先}
 \subsection{忘記密碼}
 \subsection{私鑰盜竊}
-\subsection{AID 刪除}
