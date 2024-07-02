@@ -225,8 +225,35 @@ Consensus Core 的設計還考慮到了系統的可擴展性和互操作性。�
 此演算法展示了註冊過程中的主要步驟，包括 AID 生成、伺服器查詢、MFA 驗證以及最終的註冊確認。這種設計不僅確保了用戶註冊的便利性，還通過多層次的驗證機制保障了系統的安全性和用戶的隱私。
 
 \subsection{別名在服務器上登入}
-\subsection{AID 遷移}
+
+本研究提出了一種創新的別名登入機制，該機制結合了時空分析演算法（Spatio-temporal Analysis Algorithm）、風險基礎認證（Risk-Based Authentication, RBA）以及多因素認證（Multi-Factor Authentication, MFA），以解決直接使用別名進行登入這一具有挑戰性的問題。
+
+我們的實作不僅顯著提升了用戶的登入體驗，還確保了系統的安全性和可信度。典型的登入流程如下：
+\begin{enumerate}
+  \item 用戶在應用程式介面中輸入別名（alias）和個人識別碼（Personal Identification Number, PIN），隨後提交登入請求。
+  \item 匿名身份（Anonymous Identity, AID）伺服器接收到請求後，可能會遇到多組相同別名與 PIN 碼的情況。
+  \item 時空分析演算法根據用戶的裝置資訊和網際協定（Internet Protocol, IP）位址，分析並識別最可能對應的幾組別名，進而提取這些別名的 AID。
+  \item 系統通過共識模組（Consensus Module）中的快取查詢功能，定位這些 AID 所關聯的用戶 AID 在相應 AID 伺服器的位址。
+  \item 主要的 AID 伺服器向這些關聯的 AID 伺服器發送請求，要求進行 RBA 分析。
+\end{enumerate}
+
+若 RBA 分析結果顯示風險程度較高，可能出現兩種情況：
+\begin{itemize}
+  \item 該別名並非用戶登入的目標別名
+  \item 該別名當前進行別名登入的風險程度過高
+\end{itemize}
+
+基於這兩種條件，系統可能面臨三種情境：
+\begin{enumerate}
+  \item 沒有別名通過 RBA 分析，此時系統將要求用戶進行 MFA 驗證。
+  \item 僅有一個別名通過 RBA 分析，用戶可直接登入。
+  \item 多個別名通過 RBA 分析，表明當前難以準確識別用戶，系統將要求用戶進行額外的 MFA 驗證以增加可信度，這將有助於提高後續登入時 RBA 分析的通過機率。
+\end{enumerate}
+
+本實作的創新之處在於巧妙地結合了時空分析、風險評估和多因素認證，在保障系統安全性的同時，為用戶提供了便捷的登入體驗。這種方法不僅解決了別名重複使用的問題，還通過動態風險評估和額外的身份驗證機制，確保了整個登入過程的安全性和可靠性。
+
 \subsection{跨 AID Server 的驗證}
+\subsection{AID 遷移}
 
 \section{與現有方法之比較}
 \subsection{GDPR}
