@@ -2,26 +2,432 @@
 
 \chapter{文獻探討}
 
-\section{身分驗證技術的方展}
+在本節中, 我們不僅會分析身份管理技術的發展歷程, 還會探討近代的身份驗證資安技術。最後, 我們將總結自主身份系統如何透過自主的思想解決現有技術的缺點與限制。
 
+\section{身分管理技術的發展}
+身分管理技術的演進反映了數位時代對安全、隱私和用戶自主權的不斷追求。本節將詳細探討從最初的中心化身分管理到最新的去中心化身分概念的發展歷程。
 \subsection{一般身分}
-
+一般身分,也稱為中心化身分(Centralized Identity),是數位身分管理的初始階段。
+\subsubsection{定義與特徵}
+中心化身分系統由單一權威機構管理和控制,通常是大型組織或政府機構。這種系統的主要特徵包括:
+\begin{itemize}
+  \item 集中式控制: 所有身分信息都存儲在中央數據庫中。
+  \item 層級結構: 採用自上而下的管理方式。
+  \item 高度依賴: 系統的安全性和可靠性完全依賴於中央機構。
+\end{itemize}
+\subsubsection{優勢與局限}
+中心化身分系統的優勢在於其管理的簡單性和效率,但同時也存在顯著的局限:
+\begin{itemize}
+  \item 優勢:
+        \begin{itemize}
+          \item 統一管理,便於維護
+          \item 標準化的身分驗證流程
+        \end{itemize}
+  \item 局限:
+        \begin{itemize}
+          \item 單點故障風險高
+          \item 用戶隱私保護不足
+          \item 跨系統互操作性差
+        \end{itemize}
+\end{itemize}
+\subsubsection{應用實例}
+典型的中心化身分系統包括早期的企業內部身分管理系統和政府issued ID系統。例如,傳統的Windows Active Directory就是一個典型的中心化身分管理系統。
 \subsection{聯合身分}
+聯合身分(Federated Identity)是對中心化身分系統局限性的一種回應,旨在提高系統間的互操作性。
+\subsubsection{定義與原理}
+聯合身分允許不同組織之間共享身分信息,使用戶能夠使用單一set的憑證訪問多個系統。其核心原理包括:
+\begin{itemize}
+  \item 信任關係: 參與組織之間建立互信機制。
+  \item 身分federation: 實現不同域之間的身分信息共享。
+  \item 單點登錄(SSO): 用戶只需登錄一次即可訪問多個服務。
+\end{itemize}
+\subsubsection{技術實現}
+聯合身分的技術實現主要依賴於以下協議和標準:
+\begin{itemize}
+  \item SAML (Security Assertion Markup Language)
+  \item WS-Federation (Web Services Federation)
+  \item OAuth 2.0 (用於授權)
+\end{itemize}
+\subsubsection{優勢與挑戰}
+聯合身分相比中心化身分有顯著進步,但仍存在一些挑戰:
+\begin{itemize}
+  \item 優勢:
+        \begin{itemize}
+          \item 提高用戶體驗,減少多重登錄的需求
+          \item 降低身分管理的複雜性和成本
+          \item 增強系統間的互操作性
+        \end{itemize}
+  \item 挑戰:
+        \begin{itemize}
+          \item 隱私問題: 身分提供者可能獲取過多用戶信息
+          \item 安全風險: 如果身分提供者被攻破,可能影響多個系統
+          \item 標準化問題: 不同聯盟間的兼容性仍然存在挑戰
+        \end{itemize}
+\end{itemize}
+\subsection{使用者中心的身分}
 
-\subsection{OpenID}
+常見的實作為 OpenID ，是一種開放標準和去中心化的身份驗證協議,代表了向用戶中心身份管理過渡的重要一步。
+
+\subsubsection{定義與特點}
+
+OpenID允許用戶使用現有賬戶登錄多個網站,而無需創建新賬戶。其主要特點包括:
+
+\begin{itemize}
+  \item 去中心化: 沒有單一的身份提供者控制整個系統。
+  \item 用戶控制: 用戶可以選擇信任的身份提供者。
+  \item 開放標準: 任何網站都可以使用OpenID來登錄用戶。
+\end{itemize}
+
+\subsubsection{技術原理}
+OpenID的工作原理基於以下步驟:
+\begin{enumerate}
+  \item 用戶嘗試登錄支持OpenID的網站（依賴方）。
+  \item 用戶提供其OpenID標識符。
+  \item 依賴方將用戶重定向到其OpenID提供者。
+  \item 用戶在OpenID提供者處進行身份驗證。
+  \item OpenID提供者將用戶重定向回依賴方,並提供身份驗證結果。
+\end{enumerate}
+
+\subsubsection{版本演進}
+OpenID標準經歷了多次演進:
+\begin{itemize}
+  \item OpenID 1.0和1.1: 最初版本,引入基本概念。
+  \item OpenID 2.0: 增加了安全性和功能性改進。
+  \item OpenID Connect: 基於OAuth 2.0構建,提供更豐富的身份信息。
+\end{itemize}
+
+\subsubsection{優勢與局限}
+OpenID在推動去中心化身份管理方面取得了重要進展,但仍存在一些局限:
+\begin{itemize}
+  \item 優勢:
+        \begin{itemize}
+          \item 簡化用戶體驗,減少密碼疲勞
+          \item 提高網站對用戶身份的信任度
+          \item 降低網站實現用戶認證的成本
+        \end{itemize}
+  \item 局限:
+        \begin{itemize}
+          \item 用戶隱私仍可能受到OpenID提供者的影響
+          \item 部分用戶可能難以理解OpenID的工作原理
+          \item 大型身份提供者（如Google, Facebook）可能主導市場
+        \end{itemize}
+\end{itemize}
 
 \subsection{去中心化身分}
+去中心化身分(Decentralized Identity)代表了身份管理技術的最新發展方向,旨在賦予用戶對其數字身份的完全控制權。
+
+\subsubsection{定義與核心理念}
+去中心化身分是一種允許個人或組織創建並完全擁有其數字身份的方法,無需依賴任何中央機構。其核心理念包括:
+\begin{itemize}
+  \item 自主權: 用戶完全控制自己的身份信息。
+  \item 可移植性: 身份可以在不同系統間自由移動。
+  \item 隱私保護: 用戶可以選擇性地披露身份信息。
+  \item 安全性: 利用密碼學技術確保身份信息的完整性和真實性。
+\end{itemize}
+\subsubsection{技術基礎}
+去中心化身分主要基於以下技術:
+\begin{itemize}
+  \item 區塊鏈: 提供不可篡改的分布式賬本。
+  \item 分布式標識符(DID): 用於唯一標識去中心化數字身份。
+  \item 可驗證證明(Verifiable Credentials): 用於證明身份屬性。
+  \item 零知識證明: 允許在不披露具體信息的情況下證明某一屬性。
+\end{itemize}
+
+\subsubsection{實現方案}
+目前已有多個項目致力於實現去中心化身分:
+\begin{itemize}
+  \item Sovrin: 基於Hyperledger Indy的開源身份網絡。
+  \item uPort: 基於以太坊的身份管理解決方案。
+  \item Microsoft ION: 基於比特幣區塊鏈的去中心化身份系統。
+\end{itemize}
+
+\subsubsection{優勢與挑戰}
+去中心化身分提供了許多優勢,但在實際應用中也面臨一些挑戰:
+\begin{itemize}
+  \item 優勢:
+        \begin{itemize}
+          \item 增強用戶隱私和數據控制
+          \item 減少身份盜竊和欺詐風險
+          \item 提高身份信息的可移植性和互操作性
+        \end{itemize}
+  \item 挑戰:
+        \begin{itemize}
+          \item 技術複雜性可能影響用戶採用
+          \item 法律和監管框架需要適應新的身份範式
+          \item 需要建立廣泛的生態系統支持
+        \end{itemize}
+\end{itemize}
+
 
 \section{近代身分驗證資安技術}
-
+隨著數位技術的快速發展,身分驗證的安全性面臨著越來越多的挑戰。本節將探討本研究中會持續提到的幾種近代資安技術,包括無密碼登入、基於風險的驗證、OWASP安全標準、多因素驗證以及裝置指紋技術。
 \subsection{無密碼登入}
+無密碼登入(Passwordless Authentication)是一種新興的身分驗證方法,旨在解決傳統密碼所帶來的安全風險和使用不便。
+\subsubsection{定義與原理}
+無密碼登入是指在不使用傳統密碼的情況下完成用戶身份驗證的過程。主要原理包括:
+\begin{itemize}
+  \item 使用生物特徵(如指紋、面部識別)進行身份驗證
+  \item 利用硬件安全密鑰(如 YubiKey)
+  \item 通過手機應用或郵箱接收一次性驗證碼
+\end{itemize}
+\subsubsection{優勢與挑戰}
+無密碼登入技術提供了多項優勢,但也面臨一些挑戰:
+\begin{itemize}
+  \item 優勢:
+        \begin{itemize}
+          \item 提高安全性,減少密碼相關的攻擊風險
+          \item 改善用戶體驗,無需記憶複雜密碼
+          \item 降低密碼重置和管理的成本
+        \end{itemize}
+  \item 挑戰:
+        \begin{itemize}
+          \item 需要額外的硬件或軟件支持
+          \item 用戶習慣的改變可能需要時間
+          \item 某些生物特徵識別技術可能引發隱私顧慮
+        \end{itemize}
+\end{itemize}
+\subsubsection{實現技術}
+常見的無密碼登入實現技術包括:
+\begin{itemize}
+  \item FIDO2 (Fast IDentity Online) 標準
+  \item WebAuthn API
+  \item 移動推送通知認證
+\end{itemize}
 
-\subsubsection{基於危險的驗證}
+\subsection{基於風險的驗證}
+基於風險的驗證(Risk-Based Authentication, RBA)是一種動態調整身份驗證強度的方法,根據每次登錄嘗試的風險級別來決定所需的驗證步驟。
+\subsubsection{原理與工作流程}
+RBA系統通常遵循以下工作流程:
+\begin{enumerate}
+  \item 收集上下文信息: 如IP地址、地理位置、設備信息等
+  \item 風險評估: 根據收集的信息評估當前登錄嘗試的風險級別
+  \item 動態調整: 基於風險評估結果,決定是否需要額外的驗證步驟
+  \item 持續學習: 系統不斷學習和更新風險模型
+\end{enumerate}
 
-\subsubsection{OWSAP}
+\subsubsection{風險因素}
+RBA考慮的風險因素通常包括:
+\begin{itemize}
+  \item 地理位置異常
+  \item 設備變更
+  \item 登錄行為模式變化
+  \item 網絡環境(如使用VPN)
+  \item 敏感操作(如大額交易)
+\end{itemize}
 
-\subsubsection{多因素驗證}
+\subsubsection{優勢與局限性}
+RBA在提高安全性的同時也帶來了一些挑戰:
+\begin{itemize}
+  \item 優勢:
+        \begin{itemize}
+          \item 提供針對性的安全保護
+          \item 減少對低風險用戶的干擾
+          \item 能夠適應不斷變化的威脅環境
+        \end{itemize}
+  \item 局限性:
+        \begin{itemize}
+          \item 可能產生誤判,影響用戶體驗
+          \item 需要處理大量數據,增加系統複雜性
+          \item 隱私問題:需要收集和分析用戶行為數據
+        \end{itemize}
+\end{itemize}
 
-\subsubsection{裝置指紋}
+\subsection{OWASP}
+OWASP (Open Web Application Security Project) 是一個非營利基金會,致力於提高軟件的安全性。雖然OWASP不是一種特定的技術,但它提供了重要的安全指南和最佳實踐,對身份驗證安全有重要影響。
+
+\subsubsection{OWASP Top 10}
+OWASP Top 10是一份關於web應用程序最關鍵安全風險的報告,其中包括與身份驗證相關的多個項目:
+
+\begin{itemize}
+  \item 身份認證失效 (Broken Authentication)
+  \item 敏感數據洩露 (Sensitive Data Exposure)
+  \item 失效的訪問控制 (Broken Access Control)
+\end{itemize}
+
+\subsubsection{OWASP身份驗證指南}
+OWASP提供了詳細的身份驗證安全指南,包括:
+
+\begin{itemize}
+  \item 密碼策略建議
+  \item 多因素驗證實施指南
+  \item 會話管理最佳實踐
+  \item 防範常見攻擊(如跨站腳本攻擊,SQL注入)的方法
+\end{itemize}
+
+\subsubsection{對身份驗證安全的影響}
+OWASP的工作對提高身份驗證安全性有重要貢獻:
+\begin{itemize}
+  \item 提高了開發者和組織對身份驗證安全的認識
+  \item 提供了實用的安全實施指南
+  \item 促進了安全最佳實踐的共享和標準化
+\end{itemize}
+
+\subsection{多因素驗證}
+多因素驗證(Multi-Factor Authentication, MFA)是一種要求用戶提供兩種或更多驗證方式的安全機制,大大提高了身份驗證的安全性。
+
+\subsubsection{驗證因素類型}
+MFA通常涉及以下幾類驗證因素:
+\begin{itemize}
+  \item 知識因素: 用戶知道的東西,如密碼、PIN碼
+  \item 所有因素: 用戶擁有的東西,如手機、硬件令牌
+  \item 固有因素: 用戶的生物特徵,如指紋、虹膜
+  \item 位置因素: 用戶的地理位置
+  \item 行為因素: 用戶的行為模式,如打字節奏
+\end{itemize}
+\subsubsection{常見MFA方法}
+實際應用中常見的MFA方法包括:
+
+\begin{itemize}
+  \item SMS一次性密碼 (OTP)
+  \item 移動應用程序生成的TOTP (基於時間的一次性密碼)
+  \item 硬件安全密鑰 (如YubiKey)
+  \item 生物識別 (如指紋、面部識別)
+  \item 推送通知
+\end{itemize}
+
+\subsubsection{優勢與挑戰}
+MFA雖然大大提高了安全性,但也面臨一些挑戰:
+\begin{itemize}
+  \item 優勢:
+        \begin{itemize}
+          \item 顯著提高賬戶安全性
+          \item 減少身份盜竊和未授權訪問的風險
+          \item 滿足許多法規和合規要求
+        \end{itemize}
+  \item 挑戰:
+        \begin{itemize}
+          \item 可能增加用戶登錄的複雜性
+          \item 某些MFA方法(如SMS)可能被攔截
+          \item 實施和維護成本可能較高
+        \end{itemize}
+\end{itemize}
+
+\subsection{裝置指紋}
+裝置指紋(Device Fingerprinting)是一種通過收集設備特徵信息來唯一識別或驗證用戶設備的技術,常用於增強身份驗證和防欺詐系統。
+\subsubsection{工作原理}
+裝置指紋技術通過以下步驟工作:
+\begin{enumerate}
+  \item 數據收集: 收集設備的各種特徵信息
+  \item 特徵提取: 從收集的數據中提取關鍵特徵
+  \item 指紋生成: 基於特徵創建唯一的設備標識符
+  \item 比較與驗證: 將當前指紋與已知指紋進行比較
+\end{enumerate}
+
+\subsubsection{常見的指紋特徵}
+裝置指紋可能包括以下特徵:
+\begin{itemize}
+  \item 硬件信息: CPU型號、內存大小、硬盤序列號等
+  \item 軟件環境: 操作系統版本、已安裝的字體、瀏覽器插件等
+  \item 網絡特徵: IP地址、TCP/IP配置參數等
+  \item 瀏覽器設置: 用戶代理字符串、語言設置、時區等
+  \item 運行時特徵: Canvas指紋、WebGL指紋等
+\end{itemize}
+
+\subsubsection{應用場景}
+裝置指紋技術在身份驗證和安全領域有廣泛應用:
+\begin{itemize}
+  \item 增強型身份驗證: 作為額外的驗證因素
+  \item 防欺詐: 識別可疑設備或行為模式
+  \item 持續身份驗證: 在會話期間持續驗證用戶身份
+  \item 風險評估: 作為風險基礎驗證的一個輸入因素
+\end{itemize}
+
+\subsubsection{優勢與挑戰}
+裝置指紋技術提供了獨特的安全優勢,但也面臨一些挑戰:
+\begin{itemize}
+  \item 優勢:
+        \begin{itemize}
+          \item 提供無需用戶交互的額外安全層
+          \item 可以檢測異常或可疑的設備行為
+          \item 有助於識別帳戶共享或未經授權的訪問
+        \end{itemize}
+  \item 挑戰:
+        \begin{itemize}
+          \item 隱私問題: 可能被視為對用戶隱私的侵犯
+          \item 準確性: 設備更新或配置變化可能影響指紋的穩定性
+          \item 法律合規: 在某些司法管轄區可能面臨法律限制
+        \end{itemize}
+\end{itemize}
+
+總結來說,近代身分驗證資安技術正朝著更安全、更便捷、更智能的方向發展。無密碼登入、基於風險的驗證、OWASP安全標準、多因素驗證和裝置指紋等技術的結合,為應對當前複雜多變的網絡安全威脅提供了強有力的工具。
+
 
 \section{文獻探討總結}
+
+我們將從便捷性、安全性、公平性與隱私性四個方面進行分析，探討自主身份系統如何解決現有技術的缺點與限制。
+
+\subsection{便捷性}
+
+\paragraph{現有技術分析}
+傳統的身份驗證模式要求用戶為每個組織創建獨立的帳號，甚至在同一組織內可能需要管理多套身份方案。這種方式雖然使得組織能夠完全控制用戶身份，但也導致了以下問題：
+
+\begin{itemize}
+  \item 用戶需要記憶多組登錄憑證，增加了管理難度。
+  \item 不同系統間的身份信息難以互通，降低了用戶體驗。
+  \item 身份創建過程耗時耗力，降低了效率。
+\end{itemize}
+
+
+\paragraph{AID 系統解決方案}
+我們提出的 AID 系統通過以下方式解決這些問題：
+
+
+\begin{itemize}
+  \item 用戶管理單一身份，通過別名機制靈活地加入不同組織。
+  \item 實現一個身份多處使用的模式，大幅提高便捷性。
+  \item 各組織成為 AID 系統的子集，簡化了用戶的身份管理流程。
+\end{itemize}
+
+\subsection{安全性}
+
+\paragraph{現有技術分析}
+傳統身份驗證模式下，機構建置了許多安全的身份驗證與權限管理機制讓用戶選用
+
+\begin{itemize}
+  \item 身份驗證技術的瓶頸，
+\end{itemize}
+
+\paragraph{AID 系統解決方案}
+AID 系統通過以下機制提高安全性：
+\begin{itemize}
+  \item 用戶可自主控制與限制自身權限與數據訪問範圍。
+  \item 採用加密技術確保數據安全，減少對平台運營者的依賴。
+  \item 分布式存儲降低了單點故障風險。
+\end{itemize}
+
+\subsection{公平性}
+
+\paragraph{現有技術分析}
+在傳統模式下，大型組織掌握大量用戶資源，容易形成壟斷，導致：
+\begin{itemize}
+  \item 用戶處於弱勢地位，難以對平台政策產生影響。
+  \item 數據壟斷阻礙了市場公平競爭。
+  \item 用戶難以自由選擇或轉換服務提供商。
+\end{itemize}
+
+\paragraph{AID 系統解決方案}
+AID 系統通過以下方式提升公平性：
+\begin{itemize}
+  \item 每個用戶都有權利管理自己的身份，不受特定組織的限制。
+  \item 用戶可以自主地在 AID 伺服器之間進行身份遷移。
+  \item 通過去中心化技術，減少對單一大型平台的依賴。
+\end{itemize}
+
+\subsection{隱私性}
+
+\paragraph{現有技術分析}
+在 GDPR 的隱私保護法規有幾項現有的身份驗證技術難以達到的要求：
+\begin{itemize}
+  \item 被遺忘權，用戶有權要求系統刪除自己的數據，但是很難徹底清除。
+  \item 數據最小化，系統僅可以存取與使用必要的數據。
+  \item 積極授權，用戶要明確授權系統使用自己的數據，數據才會被使用。
+\end{itemize}
+
+\paragraph{AID 系統解決方案}
+AID 系統通過以下方式保護用戶隱私：
+\begin{itemize}
+  \item 利用可否認權來解決被遺忘權問題，即使用戶的資料無法徹底刪除，但用戶可以否認自己的資料，沒有人可以證明這些資料是屬於用戶的。
+  \item
+\end{itemize}
+
+總結來說，AID 系統通過自主管理的方式，在保留傳統身份驗證系統的優點（如組織對用戶的管理能力）的同時，有效解決了現有技術的缺點，提高了便捷性、安全性、公平性與隱私性。
