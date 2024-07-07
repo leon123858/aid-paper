@@ -4,7 +4,7 @@ all:
 	open ./paper.pdf
 
 init:
-	go install github.com/leon123858/latex-directory-counter@v0.1.2
+	go install github.com/leon123858/latex-directory-counter@v0.2.0
 
 count:
 	echo "Counting the number of words in the paper."
