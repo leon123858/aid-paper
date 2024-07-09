@@ -4,11 +4,11 @@ all:
 	open ./paper.pdf
 
 init:
-	go install github.com/leon123858/latex-directory-counter@v0.2.0
+	go install github.com/leon123858/latex-directory-counter@latest
 
 count:
-	echo "Counting the number of words in the paper."
-	echo "should use `make init` first."
+	# echo "Counting the number of words in the paper."
+	# echo "should use make init first."
 	latex-directory-counter ./contents
 
 copy:
