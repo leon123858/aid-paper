@@ -38,7 +38,7 @@ you can use view button next to run icon above in `*.tex` files, it will be a pr
 
 ## What does my paper talking about?
 
-本研究探討了將自主概念應用於數位身份管理的創新方法，提出「自主身份」(Autonomous Identity, AID)系統，通過為用戶提供對其數位身份的全面控制權，以解決當前身份管理模式的固有限制。
+本研究探討了將自主概念應用於數位身份管理的創新方法，提出「自主身份」（Autonomous Identity，AID）系統。該系統賦予每位用戶全面控制個人數位身份的能力，旨在解決當前身份管理模式的固有限制。
 
 ## related work
 
