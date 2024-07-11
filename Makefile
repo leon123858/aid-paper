@@ -3,12 +3,18 @@ all:
 	make copy
 	open ./paper.pdf
 
-init:
-	go install github.com/leon123858/latex-directory-counter@latest
+latexInit:
+	sudo apt -y update
+	sudo apt -y install texlive-full
+	sudo apt -y install texlive-lang-chinese texlive-fonts-recommended
+
+build:
+	mkdir -p .out
+	xelatex -file-line-error -halt-on-error -interaction=nonstopmode -output-directory=.out main.tex
 
 count:
 	# echo "Counting the number of words in the paper."
-	# echo "should use make init first."
+	# echo "should use `go install github.com/leon123858/latex-directory-counter@latest` first."
 	latex-directory-counter ./contents
 
 copy:
