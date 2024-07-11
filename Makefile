@@ -8,6 +8,9 @@ latexInit:
 	sudo apt -y install texlive-full
 	sudo apt -y install texlive-lang-chinese texlive-fonts-recommended
 
+deploy:
+	gh workflow run pdf.yml
+
 build:
 	mkdir -p .out
 	xelatex -file-line-error -halt-on-error -interaction=nonstopmode -output-directory=.out main.tex
