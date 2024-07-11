@@ -4,7 +4,7 @@
 
 We use golang CLI to count the number of words in the project.
 
-Please follow commnet in `make count`.
+Please follow comment in `make count`.
 
 ## How to preview PDF by command
 
