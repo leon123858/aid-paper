@@ -293,17 +293,17 @@
     name    = university@en,
   },
   college = {
-    default = {工學院},
+    default = {電資工程學院},
   },
   college* = {
     default = {College of Engineering},
     name    = college@en,
   },
   institute = {
-    default = {工程科學海洋工程所},
+    default = {資訊工程所},
   },
   institute* = {
-    default = {Department of Engineering Science and Ocean Engineering},
+    default = {Department of Computer Science and Information Technology},
     name    = institute@en,
   },
   title = {
