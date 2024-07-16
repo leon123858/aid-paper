@@ -34,13 +34,13 @@
   \item 暫存並管理用戶數據（點數、歷史紀錄）。
   \item 要求用戶上傳「數據證書」以驗證點數，並生成新的點數證明。
   \item 登出時回傳用戶數據並清除服務端資料。
-  \end{itemize}
+\end{itemize}
 在支付系統中，我們同樣加入了自主身份系統。其包含以下機制：
 \begin{itemize}
   \item 基於「自主證書」進行身份驗證和複雜登入。
   \item 支付後生成「數據證書」作為交易憑證。
   \item 不存儲用戶資訊，僅回傳「數據證書」。
-  \end{itemize}
+\end{itemize}
 最後，關於數據層的實現，我們採取了以下措施：
 \begin{itemize}
   \item 基於Flutter框架開發跨平台網絡前端應用，為每個服務提供直觀且功能豐富的圖形用戶界面（GUI）
@@ -53,27 +53,27 @@
 \subsection{產生新的AID與自主證書}
 \begin{enumerate}
   \item 用戶在任意支援自主身份的前端應用中，點擊「產生新的AID」
-  \begin{enumerate}
-    \item 在裝置內部基於 UUID 機制產生唯一識別號後存儲
-  \end{enumerate}
+        \begin{enumerate}
+          \item 在裝置內部基於 UUID 機制產生唯一識別號後存儲
+        \end{enumerate}
   \item 用戶在簽章服務的前端介面中，選擇AID並且點擊「簽章」，產生表單讓用戶填寫資料
   \item 用戶填寫個人資訊，包含別名與pin碼，並且點擊「確認」
-  \begin{enumerate}
-    \item 透過用戶填入的資訊與AID中的識別號，生成未簽名「自主證書」
-    \item 把自主證書傳入服務層產生簽名並上鏈
-    \item 服務端回傳簽名後的「自主證書」與合約地址，用戶存儲在個人設備
-  \end{enumerate}
+        \begin{enumerate}
+          \item 透過用戶填入的資訊與AID中的識別號，生成未簽名「自主證書」
+          \item 把自主證書傳入服務層產生簽名並上鏈
+          \item 服務端回傳簽名後的「自主證書」與合約地址，用戶存儲在個人設備
+        \end{enumerate}
 \end{enumerate}
 通過這樣的流程，用戶自主的生成了自己的AID和自主證書，整個用戶識別不依賴單一服務商，而是由用戶自己控制。
 \subsection{進入支付服務獲取收據}
 \begin{enumerate}
   \item 用戶在支付服務的前端介面中，選擇AID並且點擊「支付」
-  \begin{enumerate}
-    \item 自動取用設備上存放的「自主證書」，上傳至服務端，觸發複雜登入
-    \item 數據層的前端介面自動取用設備上的私鑰產生簽章完成登入
-    \item 服務端驗證簽章後，完成支付，於是生成「數據證書」並上鏈
-    \item 服務端回傳「數據證書」給用戶存儲在個人設備
-  \end{enumerate}
+        \begin{enumerate}
+          \item 自動取用設備上存放的「自主證書」，上傳至服務端，觸發複雜登入
+          \item 數據層的前端介面自動取用設備上的私鑰產生簽章完成登入
+          \item 服務端驗證簽章後，完成支付，於是生成「數據證書」並上鏈
+          \item 服務端回傳「數據證書」給用戶存儲在個人設備
+        \end{enumerate}
   \item 用戶在支付服務的前端介面中，點擊「查看收據」
 \end{enumerate}
 通過這樣的流程，用戶可以在支付後獲取到一份「數據證書」，作為交易的憑證，用戶可以在任何時候查看這份憑證，而不需要依賴支付服務商。
