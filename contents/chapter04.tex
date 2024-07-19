@@ -21,7 +21,31 @@
   \item \textbf{用戶層}: 用戶的手機應用程式，一對一對應到服務層的服務。
 \end{itemize}
 \section{實現細節}
-如圖\ref{fig:implement}所示，我們將系統分為共識層、服務層和用戶層三個部分。接下來我們將分別介紹這三個部分的實現細節。
+\begin{table}[htbp]
+  \centering
+  \caption{系統分層結構及介面}
+  \label{tab:system-interfaces}
+  \begin{tabularx}{\textwidth}{|l|X|}
+    \hline
+    \textbf{層次} & \textbf{實現的介面} \\
+    \hline
+    共識層 & - 初始化與獲取AID資訊 \\
+          & - 設置與獲取證照評論 \\
+    \hline
+    服務層 & - 簽名證照並上鏈 \\
+          & - 驗證證照與管理用戶數據 \\
+          & - 點數驗證與證明生成 \\
+          & - 登出時數據處理 \\
+          & - 身分驗證與登入 \\
+          & - 生成與回傳交易證照 \\
+    \hline
+    用戶層 & - GUI開發 (Flutter) \\
+          & - 本地數據存儲 (Hive) \\
+          & - 跨應用數據共享 \\
+    \hline
+  \end{tabularx}
+\end{table}
+如\ref{tab:system-interfaces}所示，我們實現了系統的各個層次，並提供了相應的介面。
 
 在共識層中，我們挑選了OurChain\cite{ourlab408_ourchain}作為區塊鏈的實作，並且在其上實現了智能合約。智能合約的介面如下：
 \begin{itemize}
