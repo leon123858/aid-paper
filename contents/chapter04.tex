@@ -21,6 +21,8 @@
   \item \textbf{用戶層}: 用戶的手機應用程式，一對一對應到服務層的服務。
 \end{itemize}
 \section{實現細節}
+如圖\ref{fig:implement}所示，我們將系統分為共識層、服務層和用戶層三個部分。接下來我們將分別介紹這三個部分的實現細節。
+
 在共識層中，我們挑選了OurChain\cite{ourlab408_ourchain}作為區塊鏈的實作，並且在其上實現了智能合約。智能合約的介面如下：
 \begin{itemize}
   \item \textbf{initAID}: 設置合約的基本資訊，本實作包含擁有者AID和證照簽名。
