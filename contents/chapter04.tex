@@ -3,7 +3,13 @@
 \chapter{系統實作}
 本研究已成功實現了系統的核心功能，並在受控的測試環境中進行了全面的概念驗證（Proof of Concept, PoC）。系統的驗證對象包含兩個主要服務，一是遵循微軟AI聊天系統規格\cite{microsoft_ai_chat_protocol}的典型AI聊天服務;二是一個假想的第三方支付服務。用戶可以使用自主身分，在支付費用的前提下使用AI聊天服務。本章將詳細介紹系統的架構和實現細節，並通過流程分析來進一步展現自主身分系統的應用價值。
 \section{系統架構}
-整個自主身分系統的概念驗證分成多個模塊，以下按照分層架構來介紹：
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth, keepaspectratio]{figures/implement.png}
+  \caption{AID概念驗證架構簡圖}
+  \label{fig:implement}
+\end{figure}
+整個自主身分系統的概念驗證分成多個模塊如圖\ref{fig:implement}，以下按照分層架構來介紹：
 \begin{itemize}
   \item \textbf{共識層}: 一條區塊鏈，用於存放「自主證照」和「數據證照」的智能合約。
   \item \textbf{服務層}: 實際與用戶產生互動的服務，包括：
@@ -45,16 +51,28 @@
 \begin{itemize}
   \item 基於Flutter框架開發跨平台網絡前端應用，為每個服務提供直觀且功能豐富的圖形用戶界面（GUI）
   \item 使用Google開發的Hive套件，以嵌入式資料庫的形式將所有用戶數據存儲在用戶的手機上，確保數據安全
-  \item 利用Apple系統的剪貼簿共享功能，實現用戶在不同前端應用中輕易共享數據
+  \item 利用作業系統的剪貼簿共享功能，實現用戶在不同前端應用中輕易共享數據
 \end{itemize}
 雖然這並不是一個完整的實作，但我們已經成功證明了自主身分系統的可行性，接下來我們將通過流程分析來展示自主身分系統的應用價值。
 \section{流程分析}
-我們將從幾條關鍵的商業流程來展示自主身分系統的應用價值。過程中將會從用戶的角度來描述系統的實際運作，以便更好地理解自主身分系統的優勢。
+我們將找出三個典型的用例，配合簡圖與細節流程來展示自主身分系統的應用價值。這三個用例分別是：
+\begin{itemize}
+  \item 產生新的AID與自主證照
+  \item 進入支付服務獲取收據
+  \item 使用AI服務對話
+\end{itemize}
 \subsection{產生新的AID與自主證照}
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth, keepaspectratio]{figures/implement-1.png}
+  \caption{產生新的AID與自主證照}
+  \label{fig:implement-1}
+\end{figure}
+如圖\ref{fig:implement-1}，以下是產生新的AID與自主證照的流程：
 \begin{enumerate}
   \item 用戶在任意支援自主身分的前端應用中，點擊「產生新的AID」
         \begin{enumerate}
-          \item 在裝置內部基於 UUID 機制產生唯一識別號後存儲
+          \item 在裝置內部基於UUID機制產生唯一識別號後存儲
         \end{enumerate}
   \item 用戶在簽章服務的前端介面中，選擇AID並且點擊「簽章」，產生表單讓用戶填寫資料
   \item 用戶填寫個人資訊，包含別名與pin碼，並且點擊「確認」
@@ -66,6 +84,13 @@
 \end{enumerate}
 通過這樣的流程，用戶自主的生成了自己的AID和自主證照，整個用戶識別不依賴單一服務商，而是由用戶自己控制。
 \subsection{進入支付服務獲取收據}
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth, keepaspectratio]{figures/implement-2.png}
+  \caption{進入支付服務獲取收據}
+  \label{fig:implement-2}
+\end{figure}
+如圖\ref{fig:implement-2}，以下是進入支付服務獲取收據的流程：
 \begin{enumerate}
   \item 用戶在支付服務的前端介面中，選擇AID並且點擊「支付」
         \begin{enumerate}
@@ -78,6 +103,13 @@
 \end{enumerate}
 通過這樣的流程，用戶可以在支付後獲取到一份「數據證照」，作為交易的證照，用戶可以在任何時候查看這份證照，而不需要依賴支付服務商。
 \subsection{使用AI服務對話}
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth, keepaspectratio]{figures/implement-3.png}
+  \caption{產生新的AID與自主證照}
+  \label{fig:implement-3}
+\end{figure}
+如圖\ref{fig:implement-3}，以下是使用AI服務對話的流程：
 \begin{enumerate}
   \item \textbf{登入}:
         \begin{enumerate}
