@@ -3,12 +3,12 @@
 \chapter{文獻探討}
 身份系統的發展經歷了從中心化到去中心化的演變，現代身份系統設計面臨著用戶體驗、認知負擔、隱私保護和平等信任等多方面的挑戰，需要同時滿足技術創新、法規遵循和行業最佳實踐，以創造出既能滿足多樣化需求又具備足夠靈活性的解決方案，本章將探討相關文獻以深入理解這些挑戰及可能的解決途徑。
 \section{身份系統的想像}
-Internet發源於20世紀70年代，逐漸發展成為現代網際網路的基礎架構。最初，Internet的設計源自美國國防部的ARPANET計畫，旨在滿足軍事需求下的網路可用性和穩定性。因此，其初期設計基於以下假設\cite{Pekka2010HIP}：
+網際網路（Internet）發源於20世紀70年代，逐漸發展成為現代網際網路的基礎架構。最初，Internet的設計源自美國國防部的ARPANET計畫，旨在滿足軍事需求下的網路可用性和穩定性。因此，其初期設計基於以下假設\cite{Pekka2010HIP}：
 \begin{itemize}
   \item 最終使用者至少在最低程度上相互信任。
   \item 網路由於潛在的物理攻擊而本質上不可靠。
 \end{itemize}
-這些假設在當時的網路環境中是合理的。然而，隨著網路的普及和應用範圍的擴大，這些假設已不再適用\cite{tomorrowinternet}。Internet從一個研究驅動的項目演變為主流社會的重要組成部分，新的需求不斷湧現，不僅挑戰了原有的設計原則，還促使我們重新審視一些既有的原則。
+這些假設在當時的網路環境中是合理的。然而，隨著網路的普及和應用範圍的擴大，這些假設已不再適用\cite{tomorrowinternet}。隨著Internet從一個研究驅動的項目演變為主流社會的重要組成部分，新的需求不斷湧現，不僅挑戰了原有的設計原則，還促使我們重新審視一些既有的假設。
 
 在現代網路環境中，使用者之間的信任關係變得日益複雜。人們需要可靠的方式來識別自己和他人，以便在網路上進行交流和交易。因此，各種身份系統應運而生，以滿足網路環境中的身份識別需求。儘管人們希望找到一種統一而理想的身份管理系統，但正如Cameron\cite{cameron2005laws}所指出的，這樣的系統實際上並不存在。身份系統涉及的範疇廣泛而複雜，個人與組織之間存在多樣化且往往相互衝突的需求，試圖通過單一標準來限制或規範這些需求是不切實際的。
 
@@ -22,14 +22,46 @@ Internet發源於20世紀70年代，逐漸發展成為現代網際網路的基�
 \section{身份系統的迭代}
 身份系統的設計經歷了多個階段的演變，每個階段都試圖解決特定的問題，同時也帶來了新的挑戰。本節將介紹不同世代的身份系統設計，以說明彼此衝突的需求和技術限制，並為後續討論提供背景。
 \subsection{中心化身份}
-中心化身份系統是最早期的身份管理方案，在企業和政府機構中廣泛應用。典型例子包括 Windows Active Directory 和 LDAP（輕量級目錄訪問協議）\cite{microsoft2021active, sermersheim2006lightweight}。這類系統的主要優勢在於其集中管理的特性，便於系統管理員進行用戶管理和權限控制，同時確保組織內部身份信息的一致性和及時更新。然而，中心化身份系統也面臨著諸多挑戰，如單點故障風險、隱私保護問題，以及跨組織可遷移性差等。用戶通常需要為每個服務創建單獨帳戶，這不僅增加了認知負擔\cite{josang2007security}，還導致用戶身份被服務提供商完全控制，缺乏自主權。
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth,keepaspectratio]{figures/mid-identity.png}
+  \caption{中心化身份}
+  \label{fig:mid-identity}
+\end{figure}
+中心化身份系統如圖\ref{fig:mid-identity}是最早期的身份管理方案，由同一位管理者操作和存儲所有用戶資訊，在企業和政府機構中廣泛應用。典型例子包括活動目錄（Windows Active Directory, AD）和輕量級目錄訪問協議（Lightweight Directory Access Protocol, LDAP）\cite{microsoft2021active, sermersheim2006lightweight}。這類系統的主要優勢在於其集中管理的特性，便於系統管理員進行用戶管理和權限控制，同時確保組織內部身份信息的一致性和及時更新。然而，中心化身份系統也面臨著諸多挑戰，如單點故障風險、隱私保護問題，以及跨組織可遷移性差等。用戶通常需要為每個服務創建單獨帳戶，這不僅增加了認知負擔\cite{josang2007security}，還導致用戶身份被服務提供商完全控制，缺乏自主權。
 \subsection{聯合身份}
-主要為了解決同一個用戶擁有太多身份的認知負擔，聯合身份系統允許不同組織間共享身份信息，代表性技術包括 SAML（安全斷言標記語言）和 WS-Federation \cite{oasis2005security, goodner2009web}。這種模式的出現大大改善了用戶體驗，實現了單點登錄（SSO），減少了密碼疲勞問題。聯合身份系統促進了組織間的協作和資源共享，同時也降低了重複身份管理的運營成本。然而，這種模式也帶來了隱私方面的挑戰\cite{ahn2007user}，如用戶信息在多個服務提供商間共享可能違反 GDPR 等隱私法規 \cite{GDPR2016}。此外，實施和維護聯合身份系統的技術複雜度較高，參與組織之間需要建立並維護信任關係。
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth,keepaspectratio]{figures/group-identity.png}
+  \caption{聯合身份}
+  \label{fig:group-identity}
+\end{figure}
+主要為了解決同一個用戶擁有太多身份的認知負擔，聯合身份系統如圖\ref{fig:group-identity}允許不同組織間共享身份信息，代表性技術包括安全斷言標記語言（Security Assertion Markup Language, SAML）和 WS-Federation \cite{oasis2005security, goodner2009web}。這種模式的出現大大改善了用戶體驗，實現了單點登錄（Single sign-on,SSO），減少了密碼疲勞問題。聯合身份系統促進了組織間的協作和資源共享，同時也降低了重複身份管理的運營成本。然而，這種模式也帶來了隱私方面的挑戰\cite{ahn2007user}，如用戶信息在多個服務提供商間共享可能違反《通用資料保護規則》（General Data Protection Regulation,GDPR）\cite{GDPR2016}等隱私法規。此外，實施和維護聯合身份系統的技術複雜度較高，參與組織之間需要建立並維護信任關係。
 \subsection{使用者中心的身份}
-為了解決隱私方面的問題，使用者中心的身份系統逐漸興起。OpenID 和 OAuth 等協議的出現\cite{sakimura2014openid, hardt2012oauth}，標誌著身份管理向用戶賦權的重要轉變。這種模式增強了用戶對個人身份信息的控制權，提供了更大的靈活性，允許用戶選擇不同的身份提供者。使用者中心的身份系統實現了以服務供應商為單位的資訊範圍控制，在一定程度上改善了隱私保護。然而，這種方式也面臨著身份碎片化的問題，多個身份提供者的存在可能導致用戶體驗的不一致。安全風險如釣魚攻擊和身份提供者數據洩露等仍然存在\cite{sun2012devil}。此外，儘管用戶獲得了更多控制權，但他們仍然在某種程度上依賴中心化的身份提供者，因此用戶的自主性還擁有很大的提升空間\cite{allen2016selfsovereign}。
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth,keepaspectratio]{figures/user-mid-identity.png}
+  \caption{使用者中心身份}
+  \label{fig:user-mid-identity}
+\end{figure}
+為了解決隱私方面的問題，使用者中心的身份系統如圖\ref{fig:user-mid-identity}所示逐漸興起。這種系統允許使用者透過單一的身份供應者登入多個獨立的服務，同時每個服務各自掌握用戶在其內部的資料。隨著這種需求的增長，新的技術標準應運而生。OpenID和OAuth等協議的出現\cite{sakimura2014openid, hardt2012oauth}，標誌著身份管理向用戶賦權的重要轉變。這種模式增強了用戶對個人身份信息的控制權，提供了更大的靈活性，允許用戶選擇不同的身份提供者。
+
+使用者中心的身份系統實現了以服務供應商為單位的資訊範圍控制，在一定程度上改善了隱私保護。然而，這種方式也面臨著一些挑戰。首先是身份碎片化的問題，多個身份提供者的存在可能導致用戶體驗的不一致。其次，安全風險如釣魚攻擊和身份提供者數據洩露等仍然存在\cite{sun2012devil}。此外，儘管用戶獲得了更多控制權，但他們仍然在某種程度上依賴中心化的身份提供者，因此用戶的自主性還擁有很大的提升空間\cite{allen2016selfsovereign}。
 \subsection{自治身份}
-自治身份是身份管理系統的最新發展\cite{preukschat2021self}，其代表性例子包括基於區塊鏈的 uPort 和微軟的 ION（自治身份覆蓋網絡）\cite{lundkvist2017uport, microsoft2020ion}。這種方式賦予用戶對自身身份和個人數據的完全控制權，同時提高了身份的可攜性和一致性。通過利用區塊鏈技術，自治身份系統不僅增強了用戶與服務提供商之間的平等性，還提供了抗審查的特性。
-然而，作為一種新興技術，自治身份系統也面臨著諸多挑戰\cite{s22155641}。首先，它與現有法律框架可能存在潛在衝突，例如與 GDPR 中的被遺忘權不相容\cite{finck2018blockchains}。其次，自治身份系統的技術複雜性可能影響普通用戶的使用體驗，降低其易用性\cite{kubach2020self}。此外，還有諸如隱私保護、系統互操作性等問題需要解決。
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth,keepaspectratio]{figures/self-sovereign-identity.png}
+  \caption{自治身份}
+  \label{fig:self-sovereign-identity}
+\end{figure}
+自治身份如圖\ref{fig:self-sovereign-identity}所示，是身份管理系統的最新發展\cite{preukschat2021self}。這種方式透過區塊鏈技術取代中心化的身份供應商，其代表性例子包括基於以太坊的uPort和微軟的自治身份覆蓋網絡\cite{lundkvist2017uport, microsoft2020ion}。自治身份系統賦予用戶對自身身份的控制權與對身份管理的治理權，同時提高了身份的可攜性和一致性。此外，它還增強了用戶與服務提供商之間的平等性，並提供了抗審查的特性。
+
+然而，作為一種新興技術，自治身份系統也面臨著諸多挑戰\cite{s22155641}：
+\begin{itemize}
+  \item \textbf{法律框架衝突：} 它可能與現有法律框架存在潛在衝突，例如與GDPR中的被遺忘權不相容\cite{finck2018blockchains}。
+  \item \textbf{技術複雜性：} 自治身份系統的技術複雜性可能影響普通用戶的使用體驗，降低其易用性\cite{kubach2020self}。
+  \item \textbf{其他問題：} 還有諸如隱私保護、系統互操作性等問題需要解決。
+\end{itemize}
 \subsection{未來展望}
 綜上所述，身份系統的發展經歷了多個階段，每個階段都試圖解決特定的問題。從中心化到用戶自治，身份系統的設計逐漸向用戶賦權，提高了用戶對自身身份的控制權。然而，即使到了用戶自治階段，我們依舊不認為找到了理想的解決方案。如同Schardong等人\cite{s22155641,soltani2021surveydid}所說，當今的自治身份系統仍面臨著許多挑戰，包括安全性、隱私保護、易用性、信任建立等問題。因此，我們認為身份系統的設計仍有很大的改進空間，需要更多的研究和實踐來不斷優化。
 \section{身份系統的困境}
