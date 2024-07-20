@@ -43,7 +43,7 @@
 \end{figure}
 本研究提出的身分管理流程包含以下關鍵步驟如圖\ref{fig:flow-sc}：
 \begin{enumerate}
-  \item \textbf{生成AID}：透過UUID\cite{uuid}機制產生唯一編號，使用者可以根據需求設置AID內含的詮釋資料（metadata）。
+  \item \textbf{生成AID}：透過UUID\cite{uuid}機制離線產生唯一編號，使用者可以根據需求設置AID內含的詮釋資料（metadata），最後儲存在個人裝置中。
   \item \textbf{產生憑證}：使用者可以傳送相同的AID到不同的簽章者處建立不同目的的憑證，AID內的metadata可以視情況調整。
   \item \textbf{憑證上鏈}：AID的雜湊(hash)作為憑證，會被簽章者記錄在區塊鏈上。
   \item \textbf{自主加入}：使用者在加入服務時，主動向服務提供者提交自己的AID，表明自己的身分。
@@ -73,10 +73,10 @@
 \end{figure}
 數據憑證機制的運作方式如圖\ref{fig:flow-dc}：
 \begin{enumerate}
-  \item 當使用者需要向特定服務提交某個數據時，首先向能夠證明該數據真實性的其他服務提供者申請數據憑證。
-  \item 接受申請的服務提供者在區塊鏈上提交該使用者數據的校驗雜湊。
-  \item 使用者在向特定服務提交數據。
-  \item 接收數據的服務通過區塊鏈上的憑證完成數據的校驗，從而確認數據的真實性。
+  \item \textbf{申請憑證:} 當使用者需要向特定服務提交某個數據時，首先向能夠證明該數據真實性的其他服務提供者申請數據憑證。
+  \item \textbf{憑證上鏈:} 接受申請的服務提供者在區塊鏈上提交該使用者數據的校驗雜湊。
+  \item \textbf{數據共享:} 使用者在向特定服務提交數據。
+  \item \textbf{數據驗證:} 接收數據的服務通過區塊鏈上的憑證完成數據的校驗，從而確認數據的真實性。
 \end{enumerate}
 這種設計讓使用者能夠在不同的自主身分服務中安全地共享數據，同時向其他使用者保證數據的一致性和可信度。
 
@@ -140,11 +140,17 @@
 最後，我們需要設計一個機制來實現跨服務的使用者數據變化共識。這是一個常見的網路服務需求，如微服務間的調用即為典型案例。在我們的設計中，資料的控制權從服務提供者轉移到使用者身上，這將大幅改變當前網路後端應用的設計。基於共識層的功能，我們提議讓使用者成為多個服務之間的橋樑。具體而言，使用者在區塊鏈外傳遞特定格式的資訊，而服務提供者則在區塊鏈上驗證這些資訊，從而達成共識。
 \begin{figure}
   \centering
+  \includegraphics[width=\linewidth,keepaspectratio]{figures/flow-3-part-0.png}
+  \caption{當前網路後端設計}
+  \label{fig:flow-3-part-0}
+\end{figure}
+\begin{figure}
+  \centering
   \includegraphics[width=\linewidth,keepaspectratio]{figures/flow-3-part.png}
   \caption{跨服務共識流程}
   \label{fig:flow-3-part}
 \end{figure}
-舉例來說，實作一個使用第三方支付服務的購票系統時，我們的方法與現行的網路後端設計有所不同。現有設計中，購票系統全權負責與支付體系的串接，使用者僅需與購票系統溝通。而在我們提出的架構中如圖\ref{fig:flow-3-part}，流程如下：
+舉例來說，實作一個使用第三方支付服務的購票系統時，我們的方法與現行的網路後端設計\ref{fig:flow-3-part-0}有所不同。現有設計中，購票系統全權負責與支付體系的串接，使用者僅需與購票系統溝通。而在我們提出的架構中如圖\ref{fig:flow-3-part}，流程如下：
 \begin{enumerate}
   \item 購票系統要求使用者到銀行服務完成支付並取得收據。
   \item 銀行服務將收據的雜湊寫入區塊鏈。
