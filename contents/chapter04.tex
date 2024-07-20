@@ -11,10 +11,10 @@
 \end{figure}
 整個自主身分系統的概念驗證分成多個模塊如圖\ref{fig:implement}，以下按照分層架構來介紹：
 \begin{itemize}
-  \item \textbf{共識層}: 一條區塊鏈，用於存放「自主證照」和「數據證照」的智能合約。
+  \item \textbf{共識層}: 一條區塊鏈，用於存放「自主憑證」和「數據憑證」的智能合約。
   \item \textbf{服務層}: 實際與使用者產生互動的服務，包括：
         \begin{itemize}
-          \item 一個完成證照所需的簽章服務，用於生成「自主證照」。
+          \item 一個完成憑證所需的簽章服務，用於生成「自主憑證」。
           \item 一個AI聊天服務，用於提供AI聊天功能。
           \item 一個支付服務，用於提供AI聊天所需的支付功能。
         \end{itemize}
@@ -30,14 +30,14 @@
     \textbf{層次} & \textbf{實現的介面}    \\
     \hline
     共識層         & - 初始化與獲取AID資訊     \\
-                & - 設置與獲取證照評論       \\
+                & - 設置與獲取憑證評論       \\
     \hline
-    服務層         & - 簽名證照並上鏈         \\
-                & - 驗證證照與管理使用者數據     \\
+    服務層         & - 簽名憑證並上鏈         \\
+                & - 驗證憑證與管理使用者數據     \\
                 & - 點數驗證與證明生成       \\
                 & - 登出時數據處理         \\
                 & - 身分驗證與登入         \\
-                & - 生成與回傳交易證照       \\
+                & - 生成與回傳交易憑證       \\
     \hline
     使用者層         & - GUI開發 (Flutter) \\
                 & - 本地數據存儲 (Hive)   \\
@@ -49,29 +49,29 @@
 
 在共識層中，我們挑選了OurChain\cite{ourlab408_ourchain}作為區塊鏈的實作，並且在其上實現了智能合約。智能合約的介面如下：
 \begin{itemize}
-  \item \textbf{initAID}: 設置合約的基本資訊，本實作包含擁有者AID和證照簽名。
-  \item \textbf{getAIDInfo}: 獲取合約的擁有者AID和證照簽名。
-  \item \textbf{setComment}: 設置針對證照的評論，本實作提供純文字紀錄。
-  \item \textbf{getComment}: 獲取針對證照的評論。
+  \item \textbf{initAID}: 設置合約的基本資訊，本實作包含擁有者AID和憑證簽名。
+  \item \textbf{getAIDInfo}: 獲取合約的擁有者AID和憑證簽名。
+  \item \textbf{setComment}: 設置針對憑證的評論，本實作提供純文字紀錄。
+  \item \textbf{getComment}: 獲取針對憑證的評論。
 \end{itemize}
 服務層中，我們首先利用Golang調用OurChain的RPC接口來實現智能合約的操作，完成了簽章服務。簽章服務的介面如下：
 \begin{itemize}
-  \item \textbf{signAID}: 使用者傳入透過「自主證照」生成的明文證照，服務端將其簽名後上鏈，並返回簽名後的證照與合約地址。
+  \item \textbf{signAID}: 使用者傳入透過「自主憑證」生成的明文憑證，服務端將其簽名後上鏈，並返回簽名後的憑證與合約地址。
 \end{itemize}
 雖然AI聊天服務和支付服務的具體實現與本研究無直接關係，但我們主要探討如何在這些服務中嵌入自主身分系統。
 
 在AI服務中，使用者必須使用自主身分登入，並擁有足夠的點數才能使用服務。因此我們實作了以下機制：
 \begin{itemize}
-  \item 驗證並暫存使用者的「自主證照」，實現簡易登入。
+  \item 驗證並暫存使用者的「自主憑證」，實現簡易登入。
   \item 暫存並管理使用者數據（點數、歷史紀錄）。
-  \item 要求使用者上傳「數據證照」以驗證點數，並生成新的點數證明。
+  \item 要求使用者上傳「數據憑證」以驗證點數，並生成新的點數證明。
   \item 登出時回傳使用者數據並清除服務端資料。
 \end{itemize}
 在支付系統中，我們同樣加入了自主身分系統。其包含以下機制：
 \begin{itemize}
-  \item 基於「自主證照」進行身分驗證和複雜登入。
-  \item 支付後生成「數據證照」作為交易證照。
-  \item 不存儲使用者資訊，僅回傳「數據證照」。
+  \item 基於「自主憑證」進行身分驗證和複雜登入。
+  \item 支付後生成「數據憑證」作為交易憑證。
+  \item 不存儲使用者資訊，僅回傳「數據憑證」。
 \end{itemize}
 最後，關於數據層的實現，我們採取了以下措施：
 \begin{itemize}
@@ -83,18 +83,18 @@
 \section{流程分析}
 我們將找出三個典型的用例，配合簡圖與細節流程來展示自主身分系統的應用價值。這三個用例分別是：
 \begin{itemize}
-  \item 產生新的AID與自主證照
+  \item 產生新的AID與自主憑證
   \item 進入支付服務獲取收據
   \item 使用AI服務對話
 \end{itemize}
-\subsection{產生新的AID與自主證照}
+\subsection{產生新的AID與自主憑證}
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth, keepaspectratio]{figures/implement-1.png}
-  \caption{產生新的AID與自主證照}
+  \caption{產生新的AID與自主憑證}
   \label{fig:implement-1}
 \end{figure}
-如圖\ref{fig:implement-1}，以下是產生新的AID與自主證照的流程：
+如圖\ref{fig:implement-1}，以下是產生新的AID與自主憑證的流程：
 \begin{enumerate}
   \item 使用者在任意支援自主身分的前端應用中，點擊「產生新的AID」
         \begin{enumerate}
@@ -103,12 +103,12 @@
   \item 使用者在簽章服務的前端介面中，選擇AID並且點擊「簽章」，產生表單讓使用者填寫資料
   \item 使用者填寫個人資訊，包含別名與pin碼，並且點擊「確認」
         \begin{enumerate}
-          \item 透過使用者填入的資訊與AID中的識別號，生成未簽名「自主證照」
-          \item 把自主證照傳入服務層產生簽名並上鏈
-          \item 服務端回傳簽名後的「自主證照」與合約地址，使用者存儲在個人設備
+          \item 透過使用者填入的資訊與AID中的識別號，生成未簽名「自主憑證」
+          \item 把自主憑證傳入服務層產生簽名並上鏈
+          \item 服務端回傳簽名後的「自主憑證」與合約地址，使用者存儲在個人設備
         \end{enumerate}
 \end{enumerate}
-通過這樣的流程，使用者自主的生成了自己的AID和自主證照，整個使用者識別不依賴單一服務商，而是由使用者自己控制。
+通過這樣的流程，使用者自主的生成了自己的AID和自主憑證，整個使用者識別不依賴單一服務商，而是由使用者自己控制。
 \subsection{進入支付服務獲取收據}
 \begin{figure}
   \centering
@@ -120,19 +120,19 @@
 \begin{enumerate}
   \item 使用者在支付服務的前端介面中，選擇AID並且點擊「支付」
         \begin{enumerate}
-          \item 自動取用設備上存放的「自主證照」，上傳至服務端，觸發複雜登入
+          \item 自動取用設備上存放的「自主憑證」，上傳至服務端，觸發複雜登入
           \item 數據層的前端介面自動取用設備上的私鑰產生簽章完成登入
-          \item 服務端驗證簽章後，完成支付，於是生成「數據證照」並上鏈
-          \item 服務端回傳「數據證照」給使用者存儲在個人設備
+          \item 服務端驗證簽章後，完成支付，於是生成「數據憑證」並上鏈
+          \item 服務端回傳「數據憑證」給使用者存儲在個人設備
         \end{enumerate}
   \item 使用者在支付服務的前端介面中，點擊「查看收據」
 \end{enumerate}
-通過這樣的流程，使用者可以在支付後獲取到一份「數據證照」，作為交易的證照，使用者可以在任何時候查看這份證照，而不需要依賴支付服務商。
+通過這樣的流程，使用者可以在支付後獲取到一份「數據憑證」，作為交易的憑證，使用者可以在任何時候查看這份憑證，而不需要依賴支付服務商。
 \subsection{使用AI服務對話}
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth, keepaspectratio]{figures/implement-3.png}
-  \caption{產生新的AID與自主證照}
+  \caption{產生新的AID與自主憑證}
   \label{fig:implement-3}
 \end{figure}
 如圖\ref{fig:implement-3}，以下是使用AI服務對話的流程：
@@ -140,14 +140,14 @@
   \item \textbf{登入}:
         \begin{enumerate}
           \item 使用者進入AI服務的前端介面
-          \item 傳入選定AID的「自主證照」，觸發簡易登入
-          \item 使用者使用證照上的別名與密碼登入
+          \item 傳入選定AID的「自主憑證」，觸發簡易登入
+          \item 使用者使用憑證上的別名與密碼登入
           \item 登入後即開始AI服務中的一次對話
         \end{enumerate}
   \item \textbf{對話前}:
         \begin{enumerate}
           \item AI服務接受數據層中上傳的使用者點數與歷史數據
-          \item 要求使用者上傳點數的「數據證照」，以確保點數真實性
+          \item 要求使用者上傳點數的「數據憑證」，以確保點數真實性
         \end{enumerate}
   \item \textbf{對話中}:
         \begin{enumerate}
@@ -158,7 +158,7 @@
   \item \textbf{登出}:
         \begin{enumerate}
           \item 使用者選擇離開系統
-          \item AI服務將使用者點數、歷史數據與相關「數據證照」回傳至個人裝置
+          \item AI服務將使用者點數、歷史數據與相關「數據憑證」回傳至個人裝置
           \item 系統刪除所有使用者數據
         \end{enumerate}
 \end{enumerate}
