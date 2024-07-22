@@ -90,6 +90,30 @@ _paginate: false
 
 ---
 
+## 身分系統的演進(續)
+
+![height:450px](../figures/group-identity.png)
+
+---
+
+## 身分系統的演進(續)
+
+![height:450px](../figures/user-mid-identity.png)
+
+---
+
+## 身分系統的演進(續)
+
+![height:450px](../figures/self-sovereign-identity.png)
+
+---
+
+## 身分系統的演進(續)
+
+![height:450px](../figures/aid.png)
+
+---
+
 ## 現有身分系統的困境
 
 1. **使用者體驗**
