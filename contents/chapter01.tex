@@ -3,11 +3,19 @@
 \chapter{緒論}
 在當今數位時代，個人身分管理已成為一個日益重要且複雜的研究課題。隨著網絡技術的快速演進和社會對隱私保護的日益重視，傳統的身分管理系統面臨著前所未有的挑戰。本研究旨在完善自主身分（Autonomous Identity，AID）系統，該系統融合了新的思想與先進技術，為數位身分管理帶來根本性的變革。通過重新審視「自主」的概念並將其應用於身分管理領域，本研究期望能夠為構建一個更自由、更公平的數位社會貢獻一份力量。
 \section{研究背景}
-自主（Autonomy）概念源於18世紀啟蒙運動，標誌著人類開始質疑對王權與神權的依賴，轉而追求通過科學與理性實現思想獨立與自由。啟蒙思想家Kant\cite{kant1785groundwork}對自主提出了開創性定義：「按照自己認同的道德標準自由行事」。這一定義至今仍廣泛被應用於政治、法律和教育等多個領域。接著，19世紀的重要哲學家Nietzsche\cite{nietzsche1887genealogy}對道德提出了更深入的探討。他對道德的本質進行了批判性分析，認為道德源於弱者對強者的反抗，是一種透過集結群體的共識來約束個體行為的機制。
+自主（Autonomy）概念源於18世紀啟蒙運動，標誌著人類開始質疑對王權與神權的依賴，轉而追求通過科學與理性實現思想獨立與自由。這一概念的演變不僅塑造了現代社會對自主的理解，也為重新思考數位時代的身分管理提供了重要的理論基礎。
 
-這兩位哲學家的思想不僅塑造了現代社會對自主的理解，也為重新思考數位時代的身分管理提供了重要的理論基礎。隨著網絡技術的迅速演進，個人身分資訊的管理與保護已成為當今社會的重要研究課題。在這一背景下，本研究將自主的概念應用於數位身分管理領域。
+% Therefore, persons have a special importance or worth , not because autonomy is an independently valuable or otherwise important property, but because the law commands that our maxims be such that we could will them to become universal law, which is the case if and only if they could be willed by any rational being as such.
+Schaab等人\cite{Schaab2022}剖析了啟蒙思想家康德（Kant）對自主的理解：「因此，人具有特殊的重要性或價值，不僅僅是因為自主本身是一種獨立有價值或重要的特質，更因為道德法則要求我們的準則能夠成為普遍法則，而這只有在能被任何理性存在所意願時才能實現。」換言之，自主之所以重要，不僅在於其固有價值，更在於它能夠被所有理性存在所認同並成為普遍法則。這揭示了自主除了探討了個體的自由意志外，還關乎整個社會的道德基礎。
 
-本研究提出的「自主身分」（Autonomous Identity，AID）概念與目前主流探討的「自治身分」（Self-sovereign identity，SSI）系統有著本質的區別。SSI允許使用者參與身分管理系統的經營，賦予使用者對其數位身分的一定控制權。然而，AID則更進一步，使每位使用者在具備\textbf{道德標準}的身分系統中\textbf{自由的管理自己}。這種模式不僅賦予使用者更大的自主權，還在系統設計中納入了道德考量，以確保個人自主不會損害社會整體利益。
+% Through resentment, the slaves were able to subvert moral authority away from the masters and label the masters as an evil group of people with no redeeming qualities. After the tra svaluation of values, the slaves have the upper hand in the moral sector. No longer were they an oppressed people, rather they have created new values: slave values. Such values were created through utilizing slave resentment for the masters. The slave's no saying to what the masters affirmed as good installed slave values, such as weakness, sickliness, and poverty, as being good values. Nietzsche says of the slave's victory, "Afterwards, when the rabble got the upper hand in Greece, fear ran rampant in their religion, too; and the ground was prepared for  7 Christianity" (BGE 49).
+基於康德的觀點，我們可以更近一步探討何謂道德標準？這些標準如何建立？幸運的是，19世紀的重要哲學家尼采（Nietzsche）提出了「奴隸道德說」，為我們理解道德標準的形成提供了另一個視角。Haarer等人\cite{haarer2020nietzsche}分析道：「通過怨恨，奴隸們能夠顛覆主人的道德權威，將主人標籤為毫無可取之處的邪惡。在價值重估後，奴隸們在道德領域佔據了上風。他們不再是被壓迫的群體，而是創造了新的價值觀：奴隸價值觀。」
+
+這揭示了道德標準的動態性和權力關係。在尼采看來，世界由多數弱者與少數強者組成，道德最初由強者制定，弱者被迫遵守。然而，弱者通過對強者進行道德譴責，重新定義了善惡標準，從而在道德領域獲得了主導權。這種轉變雖然在尼采看來是一種道德墮落，但也展示了弱者如何通過重新定義道德來獲得反抗強權的能力。
+
+這些觀點挑戰了道德的絕對性與自由的全面性，並指出所謂對錯、善惡並非二元對立的絕對存在，而是建立在人類集體意識之上的相對概念。通過顛覆原有的階層秩序，新的平等與自由秩序得以建立。因此，本研究認為自主的真正含義可以理解為：「在理解並參與道德標準形成過程的基礎上，自由地遵循自己認同的道德準則行事。」
+
+基於這些深刻的洞見，本研究提出的「自主身分」（Autonomous Identity，AID）概念與目前主流探討的「自治身分」（Self-sovereign identity，SSI）系統有著本質的區別。SSI允許使用者參與身分管理系統的經營，賦予使用者對其數位身分的一定控制權。然而，AID則更進一步，使每位使用者在具備\textbf{動態道德標準}的身分系統中\textbf{自由的管理自己}。這種模式不僅賦予使用者更大的自主權，還在系統設計中納入了道德考量，以確保個人自主不會損害社會整體利益。
 \section{研究目的與目標}
 本研究旨在探討自主身分（Autonomous Identity，AID）作為解決當前身分管理問題的候選方案，將「自主」的哲學思想融入數位身分管理的實踐中。具體而言，本研究將致力於實現以下目標：
 \begin{enumerate}
