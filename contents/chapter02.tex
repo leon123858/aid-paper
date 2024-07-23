@@ -20,8 +20,36 @@
 
 總而言之，現代網路環境的變遷對身分系統提出了新的挑戰，這些挑戰不僅來自技術層面，還涉及社會、文化和法律等多個方面。為了應對這些挑戰，人們需要重新思考身分系統的設計理念，尋找一種既能適應當前多樣化需求，又能為未來發展預留足夠靈活性的解決方案。
 \section{身分系統的迭代}
-% todo 加表格比較每個階段的優缺點
-身分系統的設計經歷了多個階段的演變，每個階段都試圖解決特定的問題，同時也帶來了新的挑戰。本節將介紹不同世代的身分系統設計，以說明彼此衝突的需求和技術限制，並為後續討論提供背景。
+\begin{table}[htbp]
+  \centering
+  \caption{身份系統需求比較表}
+  \label{tab:compare-old-id}
+  \begin{tabular}{lcccc}
+    \hline
+    需求          & 中心化身分       & 聯合身分        & 使用者中心的身分    & 自治身分        \\
+    \hline
+    數據集中問題      & $\times$    & $\times$    & \checkmark  & \checkmark  \\
+    資料孤島化       & \checkmark  & \checkmark  & $\times$    & $\times$    \\
+    組織身分控管      & \checkmark  & \checkmark  & $\triangle$ & $\times$    \\
+    便於系統管理      & \checkmark  & \checkmark  & \checkmark  & $\times$    \\
+    減少多重身分認知負擔  & $\times$    & $\triangle$ & $\triangle$ & \checkmark  \\
+    實現單點登錄（SSO） & $\times$    & \checkmark  & \checkmark  & \checkmark  \\
+    促進組織間協作     & $\times$    & $\triangle$ & $\triangle$ & $\times$    \\
+    降低運營成本      & \checkmark  & $\times$    & \checkmark  & $\triangle$ \\
+    增強隱私保護      & $\times$    & $\times$    & $\triangle$ & \checkmark  \\
+    使用者身分資料控制權  & $\times$    & $\times$    & $\triangle$ & \checkmark  \\
+    身分提供者選擇靈活性  & $\times$    & $\times$    & \checkmark  & \checkmark  \\
+    服務數據控制權     & $\times$    & $\times$    & $\times$    & $\times$    \\
+    身分可攜性       & $\times$    & $\triangle$ & $\triangle$ & \checkmark  \\
+    使用者與服務商平等性  & $\times$    & $\times$    & $\times$    & \checkmark  \\
+    抗審查特性       & $\times$    & $\times$    & $\times$    & \checkmark  \\
+    符合現有法律框架    & $\triangle$ & $\triangle$ & $\triangle$ & $\times$    \\
+    高易用性        & \checkmark  & \checkmark  & \checkmark  & $\times$    \\
+    系統互操作性      & $\times$    & $\times$    & \checkmark  & \checkmark  \\
+    \hline
+  \end{tabular}
+\end{table}
+身分系統的設計經歷了多個階段的演變，每個階段都試圖解決特定的問題，同時也帶來了新的挑戰如表\ref{tab:compare-old-id}。本節將介紹不同世代的身分系統設計，以說明彼此衝突的需求和技術限制，並為後續討論提供背景。
 \subsection{中心化身分}
 \begin{figure}
   \centering
