@@ -1,54 +1,62 @@
 % !TeX root = ../main.tex
 
 \chapter{文獻探討}
-身分系統的發展經歷了從中心化到去中心化的演變，現代身分系統設計面臨著使用者體驗、認知負擔、隱私保護和平等信任等多方面的挑戰，需要同時滿足技術創新、法規遵循和行業最佳實踐，以創造出既能滿足多樣化需求又具備足夠靈活性的解決方案，本章將探討相關文獻以深入理解這些挑戰及可能的解決途徑。
-\section{身分系統的想像}
-網際網路（Internet）發源於20世紀70年代，逐漸發展成為現代網際網路的基礎架構。最初，Internet的設計源自美國國防部的ARPANET計畫，旨在滿足軍事需求下的網路可用性和穩定性。因此，其初期設計基於以下假設\cite{Pekka2010HIP}：
+「數位身分」可以被用於在網路上標識一個人，一種物體，甚至一個機構。更準確的說，數位身分是一組屬性，包含了對應實體的資訊與唯一識別號（identity,ID）。而「數位身分系統」是一套用於創建、管理和驗證「數位身分」的技術和流程集合。本研究探討的AID系統即是一種數位身分系統，旨在解決當前身分系統中存在的問題，並提出一套完整的解決方案。
+
+本章節闡述了理解自主身分（Autonomous Identity, AID）系統所需的關鍵背景知識。首先，本章將探討身分系統的基本需求，以此更進一步說明自主身份系統的設計理念。其次，本章將回顧身分系統的迭代過程，從中心化模式到自治身分，分析各代系統的特徵及其優劣。繼而，本章將聚焦於AID系統的發展軌跡，探討其起源與演變。最後，本章將詳細闡述身分系統設計面臨的多維度挑戰，包含使用者體驗、使用者認知、隱私保護、平等信任、法律合規性和公認原則等方面。通過這些多角度的探討，本章為讀者構建一個全面的理論框架，為後續對AID系統的深入分析和評估奠定基礎。
+\section{身分系統的需求}
+網際網路（Internet）起源於20世紀70年代，逐漸發展成為現代網際網路的基礎架構。最初，Internet的設計源自美國國防部的ARPANET計畫，旨在滿足軍事需求下的網路可用性和穩定性。因此，其初期設計基於以下假設\cite{Pekka2010HIP}：
 \begin{itemize}
   \item 最終使用者至少在最低程度上相互信任。
   \item 網路由於潛在的物理攻擊而本質上不可靠。
 \end{itemize}
-這些假設在當時的網路環境中是合理的。但是，隨著網路的普及和應用範圍的擴大，這些假設已不再適用\cite{tomorrowinternet}。隨著Internet從一個研究驅動的項目演變為主流社會的重要組成部分，新的需求不斷湧現，不僅挑戰了原有的設計原則，還促使人們重新審視一些既有的假設。
+這些假設在當時的網路環境中是合理的。然而，隨著網路的普及和應用範圍的擴大，這些假設已不再適用\cite{tomorrowinternet}。Internet從一個研究驅動的項目演變為主流社會的重要組成部分，新的需求不斷湧現，不僅挑戰了原有的設計原則，還促使人們重新審視既有的假設。
 
 在現代網路環境中，使用者之間的信任關係變得日益複雜。人們需要可靠的方式來識別自己和他人，以便在網路上進行交流和交易。因此，各種身分系統應運而生，以滿足網路環境中的身分識別需求。但正如Cameron\cite{cameron2005laws}所指出的，統一而理想的身分管理系統實際上並不存在。身分系統涉及的範疇廣泛而複雜，個人與組織之間存在多樣化且往往相互衝突的需求，試圖通過單一標準來限制或規範這些需求是不切實際的。
 
 例如，終端使用者可能希望自由地訪問和分享信息，而內容提供商和知識產權持有者則希望保護其知識產權。政府可能希望監管某些網絡活動以維護社會秩序，而使用者和隱私倡導者則強調個人隱私的重要性。這種複雜的利益衝突導致了諸如網絡中立性、數據隱私、內容審查等一系列熱點問題的出現\cite{Wu2003NetworkNeutrality}。
 
-面對這種複雜的網絡環境，Blumenthal\cite{Blumenthal2001RethinkingThe}認為確保設計上的一般性、彈性與開放性至關重要。他設想的未來充滿衝突：企業的管理者和被管理者爭論分紅，垃圾郵件的發送者和接收者爭論各自的困難。在這個網路世界中，不同身分的參與者沒有絕對的贏家，也沒有天生的失敗者。理想的系統應該通過所有使用者不斷的爭論和互動逐漸形成。
+這種複雜性在新興技術領域更為突出。以蘋果公司提出的AI運算架構\cite{apple_foundation_models}為例，該架構需要在確保用戶隱私與安全的前提下，將用戶的個資上傳到私有雲端\cite{apple_private_cloud_compute}中的虛擬機完成AI運算。這凸顯了現代身分系統在功能與隱私之間的衝突：
+\begin{itemize}
+  \item \textbf{難以驗證和執行安全性與隱私保證}：蘋果公司必須建立機制，確保用戶數據在雲端AI運算過程中的安全性和隱私性，但這些保證難以被外部驗證或強制執行。
+  \item \textbf{難以提供透明度}：在雲端環境中運行AI模型時，很難為用戶提供即時的運算過程透明度，使用戶難以了解其數據如何被處理和使用。
+  \item \textbf{難以對特權訪問實施嚴格限制}：確保系統管理員或其他特權用戶無法訪問或讀取用戶的敏感數據是一個巨大的挑戰，需要設計複雜的訪問控制機制。
+\end{itemize}
 
-這種新的設計思路不僅需要考慮技術因素，還需要權衡經濟、社會、法律等多方面的因素。正如Lessig\cite{lessig2000}所言，"程式碼就是法則"（"Code is Law"）。軟體設計本身就在表達某種價值觀，人們需要縝密的思考，結合對未來世界的想像，才能創造出足以改變網路環境既有困境的身分系統。
+面對這種複雜的需求，Blumenthal\cite{Blumenthal2001RethinkingThe}認為確保設計上的一般性、彈性與開放性至關重要。他設想的未來系統應能容納衝突並逐漸改善：企業的管理者和被管理者爭論分紅，垃圾郵件的發送者和接收者爭論各自的困難。在這個網路世界中，不同身分的參與者沒有絕對的贏家，也沒有天生的失敗者。理想的系統應該通過所有使用者不斷的爭論和互動逐漸形成。
 
-總而言之，現代網路環境的變遷對身分系統提出了新的挑戰，這些挑戰不僅來自技術層面，還涉及社會、文化和法律等多個方面。為了應對這些挑戰，人們需要重新思考身分系統的設計理念，尋找一種既能適應當前多樣化需求，又能為未來發展預留足夠靈活性的解決方案。
+總而言之，現代網路環境的變遷對身分系統提出了新的挑戰，這些挑戰不僅來自技術層面，還涉及社會、文化和法律等多個方面。為了應對這些挑戰，本研究期望透過自主的設計理念，設計出一套既能滿足當前需求，又能適應未來變化的身分系統。
 \section{身分系統的迭代}
 \begin{table}[htbp]
   \centering
-  \caption{身份系統需求比較表}
+  \caption{身分系統需求比較表}
   \label{tab:compare-old-id}
-  \begin{tabular}{lcccc}
-    \hline
-    需求          & 中心化身分       & 聯合身分        & 使用者中心的身分    & 自治身分        \\
-    \hline
-    數據集中問題      & \checkmark  & $\times$    & \checkmark  & \checkmark  \\
-    資料孤島化       & $\times$  & $\triangle$  & $\triangle$    & \checkmark    \\
-    組織身分控管      & \checkmark  & \checkmark  & $\triangle$ & $\times$    \\
-    便於系統管理      & \checkmark  & \checkmark  & \checkmark  & $\times$    \\
-    系統管理一致性      & \checkmark  & \checkmark  & \checkmark  & $\times$    \\
-    減少多重身分認知負擔  & $\times$    & $\triangle$ & $\triangle$ & \checkmark  \\
-    實現單點登錄（SSO） & $\times$    & \checkmark  & \checkmark  & \checkmark  \\
-    促進組織間協作     & $\times$    & $\triangle$ & $\triangle$ & $\times$    \\
-    降低運營成本      & \checkmark  & $\times$    & \checkmark  & $\triangle$ \\
-    增強隱私保護      & $\times$    & $\times$    & $\triangle$ & \checkmark  \\
-    使用者身分資料控制權  & $\times$    & $\times$    & $\triangle$ & \checkmark  \\
-    身分提供者選擇靈活性  & $\times$    & $\times$    & \checkmark  & \checkmark  \\
-    服務數據控制權     & $\times$    & $\times$    & $\times$    & $\times$    \\
-    身分可攜性       & $\times$    & $\times$ & $\triangle$ & \checkmark  \\
-    使用者與服務商平等性  & $\times$    & $\times$    & $\times$    & \checkmark  \\
-    抗審查特性       & $\times$    & $\times$    & $\times$    & \checkmark  \\
-    符合現有法律框架    & $\triangle$ & $\triangle$ & $\triangle$ & $\times$    \\
-    高易用性        & \checkmark  & \checkmark  & \checkmark  & $\times$    \\
-    系統互操作性      & $\times$    & $\times$    & \checkmark  & \checkmark  \\
-    \hline
-  \end{tabular}
+  \resizebox{\textwidth}{!}{
+    \begin{tabular}{lccccc}
+      \hline
+      需求          & 中心化身分       & 聯合身分        & 使用者中心的身分    & 自治身分        & 自主身分        \\
+      \hline
+      數據集中問題      & \checkmark  & $\times$    & \checkmark  & \checkmark  & \checkmark  \\
+      資料孤島化       & $\times$    & $\triangle$ & $\triangle$ & \checkmark  & \checkmark  \\
+      組織身分控管      & \checkmark  & \checkmark  & $\triangle$ & $\times$    & \checkmark  \\
+      便於系統管理      & \checkmark  & \checkmark  & \checkmark  & $\times$    & $\triangle$ \\
+      系統管理一致性     & \checkmark  & \checkmark  & \checkmark  & $\times$    & $\triangle$ \\
+      減少多重身分認知負擔  & $\times$    & $\triangle$ & $\triangle$ & \checkmark  & \checkmark  \\
+      實現單點登錄（SSO） & $\times$    & \checkmark  & \checkmark  & \checkmark  & \checkmark  \\
+      促進組織間協作     & $\times$    & $\triangle$ & $\triangle$ & $\times$    & \checkmark  \\
+      降低運營成本      & \checkmark  & $\times$    & \checkmark  & $\triangle$ & \checkmark  \\
+      增強隱私保護      & $\times$    & $\times$    & $\triangle$ & \checkmark  & \checkmark  \\
+      使用者身分資料控制權  & $\times$    & $\times$    & $\triangle$ & \checkmark  & \checkmark  \\
+      身分提供者選擇靈活性  & $\times$    & $\times$    & \checkmark  & \checkmark  & \checkmark  \\
+      服務數據控制權     & $\times$    & $\times$    & $\times$    & $\times$    & \checkmark  \\
+      身分可攜性       & $\times$    & $\times$    & $\triangle$ & \checkmark  & \checkmark  \\
+      使用者與服務商平等性  & $\times$    & $\times$    & $\times$    & \checkmark  & \checkmark  \\
+      抗審查特性       & $\times$    & $\times$    & $\times$    & \checkmark  & \checkmark  \\
+      符合現有法律框架    & $\triangle$ & $\triangle$ & $\triangle$ & $\times$    & \checkmark  \\
+      高易用性        & \checkmark  & \checkmark  & \checkmark  & $\times$    & \checkmark  \\
+      系統互操作性      & $\times$    & $\times$    & \checkmark  & \checkmark  & \checkmark  \\
+      \hline
+    \end{tabular}}
 \end{table}
 身分系統的設計經歷了多個階段的演變，每個階段都試圖解決特定的問題，同時也帶來了新的挑戰如表\ref{tab:compare-old-id}。本節將介紹不同世代的身分系統設計，以說明彼此衝突的需求和技術限制，並為後續討論提供背景。
 \subsection{中心化身分}
@@ -58,7 +66,7 @@
   \caption{中心化身分}
   \label{fig:mid-identity}
 \end{figure}
-中心化身分系統如圖\ref{fig:mid-identity}是最早期的身分管理方案，由同一位管理者操作和存儲所有使用者資訊，在企業和政府機構中廣泛應用。典型例子包括活動目錄（Windows Active Directory, AD）和輕量級目錄訪問協議（Lightweight Directory Access Protocol, LDAP）\cite{microsoft2021active, sermersheim2006lightweight}。這類系統的主要優勢在於其集中管理的特性，便於系統管理員進行使用者管理和權限控制，同時確保組織內部身分信息的一致性和及時更新。然而，中心化身分系統也面臨著諸多挑戰，如單點故障風險、隱私保護問題，以及跨組織可遷移性差等。使用者通常需要為每個服務創建單獨帳戶，這不僅增加了認知負擔\cite{josang2007security}，還導致使用者身分被服務提供商完全控制，缺乏自主權。
+中心化身分系統如圖\ref{fig:mid-identity}是最初期的身分管理方案，由同一位管理者操作和存儲所有使用者資訊，在企業和政府機構中廣泛應用。典型例子包括活動目錄（Windows Active Directory, AD）和輕量級目錄訪問協議（Lightweight Directory Access Protocol, LDAP）\cite{microsoft2021active, sermersheim2006lightweight}。這類系統的主要優勢在於其集中管理的特性，便於系統管理員進行使用者管理和權限控制，同時確保組織內部身分信息的一致性和及時更新。然而，中心化身分系統也面臨著諸多挑戰，如單點故障風險、隱私保護問題，以及跨組織可遷移性差等。使用者通常需要為每個服務創建單獨帳戶，這不僅增加了認知負擔\cite{josang2007security}，還導致使用者身分被服務提供商完全控制，缺乏自主權。
 \subsection{聯合身分}
 \begin{figure}
   \centering
@@ -94,8 +102,40 @@
 \end{itemize}
 \subsection{未來展望}
 綜上所述，身分系統的發展經歷了多個階段，每個階段都試圖解決特定的問題。從中心化到使用者自治，身分系統的設計逐漸向使用者賦權，提高了使用者對自身身分的控制權。但是，即使到了使用者自治階段，人們依舊不認為找到了理想的解決方案。如同Schardong等人\cite{s22155641,soltani2021surveydid}所說，當今的自治身分系統仍面臨著許多挑戰，包括安全性、隱私保護、易用性、信任建立等問題。因此，本研究認為身分系統的設計仍有很大的改進空間，需要更多的研究和實踐來不斷優化。
-\section{身分系統的困境}
-為了設計出一個理想的身分系統，在本節中，會從不同維度的多個方向來探討身分系統的困境。這些討論旨在釐清身分系統的核心特徵，以此為未來的設計提供參考。
+\section{AID系統的發展}
+自主身分系統的發展源於對傳統身分系統的挑戰，本節將介紹AID系統的發展軌跡，從最初的自主身分到後續的自主憑證機制，探討其設計理念和技術特點。
+\subsection{最初的自主身分}
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth,keepaspectratio]{figures/old-aid.png}
+  \caption{自主身分}
+  \label{fig:old-aid}
+\end{figure}
+最初的自主身分（Autonomous Identity, AID）系統是由學長Yuxuan提出\cite{ntu-lin2014autonomous}，透過數位簽章方案達成自主性認證，配合允許使用者將大多數資料儲存在個人設備達成數據的自主，還提出基於AID的評分機制，用於自主量化每個AID的可信度與真實性。
+
+AID系統期望建立一個跨網路服務的統一身分框架，實現身分訊息的自由流動與隱私保護。其核心設計理念在於賦予使用者對其數位身分的完全自主權，包括控制和管理身分訊息的能力。AID系統的核心機制可概括為三個方面：自主認證、數據自主性和AID信任評估機制。這種設計旨在實現真正意義上的自主身分管理。
+
+明確的描述AID系統的自主認證機制如圖\ref{fig:old-aid}所示。使用者在個人設備產生隨機UUID與公私鑰對，並將公鑰與UUID上傳至中心化的註冊機構（AID Server），以註冊AID。當使用者需要進行身分認證時，他們可以通過私鑰對數據進行簽名，並將簽名與數據一起發送給服務提供商，服務提供商可以通過向AID Server下載公鑰來驗證簽名的有效性，從而確認使用者的身分。此外，學長還提出可以讓使用者輸入帳號與密碼作為配合UUID成為生成公私鑰對的隨機種子，以簡化使用者需要記憶的資訊。
+
+關於使用者數據自主的機制，學長提出角色資料（actor profile）的概念，每個AID都會在個人設備上存儲多個角色資料，內部包含了該角色的基本資訊與在使用服務的過程中產生的數據。當使用者需要使用服務時，他們可以選擇將特定角色資料上傳至服務提供商，從而實現數據的自主。
+
+最後，基於AID的評分機制，透過讓服務提供商對使用者在服務中的行為在AID Server中評分，並將評分結果與AID綁定，從而實現對AID的可信度與真實性的量化。這種機制可以幫助服務提供商更好地評估使用者的可信度與真實性。
+\subsection{自主憑證機制}
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth,keepaspectratio]{figures/old-AC.png}
+  \caption{AID系統的自主憑證機制（AC）}
+  \label{fig:old-ac}
+\end{figure}
+本研究採用的AID系統自主憑證機制(Autonomous Certificate, AC)源自學長Tze-Nan\cite{NTU202102846}的研究成果。該機制旨在增強AID系統的數據自主性，並提升用戶隱私保護水平。Tze-Nan不僅闡述了AC機制的應用場景，還詳細闡釋了其設計原則與實現方法。
+
+AC機制如圖\ref{fig:old-ac}所示可以看作是建構於AID系統之上的公鑰基礎設施（Public Key Infrastructure，PKI）擴展方案。使用者可以尋求AC機構簽發包含使用者特定資訊的憑證，其格式應類似傳統的X.509憑證\cite{itu-t-rec-x509}。這些憑證包含了簽發AC機構的數位簽名、AC有效期限與對應AID身分資訊等等。
+
+這種自主憑證機制有效替代AID系統原設計中的角色資料（actor profile）。它使得使用者能夠根據具體需求，自行定義在特定服務中欲揭露的個人資料範疇，並尋求特定AC機構的背書。這一機制不僅提升了用戶提供之角色資訊的可信度，還增強了整體系統的靈活性。此外，AC機制亦提供自行簽署的功能，允許使用者在無需AC機構背書的情況下自主簽署憑證。這一設計確保了AID系統不會因引入AC機制而損及其原有的自主性原則。
+
+為了闡明AC機制的實際應用，我們可以考慮以下情境：某學生用戶在線購買教科書時，希望利用學生身分享受優惠，但同時也想最小化個人資訊的披露。在AC機制下,該用戶可向指定的AC機構申請學生身分憑證，並將其提供給電商平台。平台通過驗證AC的有效性即可確認用戶的學生身分，而無需獲取其他個人資訊。此過程體現了AC機制支持用戶根據具體需求選擇性地提供身分資訊，從而實現最小數據揭露原則，有效保護用戶隱私。
+\section{身分系統的挑戰}
+為了設計出一個理想的身分系統，在本節中，會從不同維度的多個方向來探討身分系統的困境。這些討論能釐清身分系統的核心特徵，以此為未來的設計提供參考。
 \subsection{使用者體驗}
 使用者體驗在身分系統設計中扮演著關鍵角色，直接影響系統的可用性和採納率。然而，Hamme等人\cite{inproceedings}的研究闡明了使用者體驗、安全性和隱私保護之間的複雜關係。該研究指出了一個普遍存在的現象：使用者傾向於選擇最簡單的方式來設置和使用身分系統，這種傾向可能導致系統安全性和隱私保護程度的降低。
 
@@ -134,28 +174,20 @@ Dhamija等人\cite{dhamija2008sevenflaws}的研究進一步指出，使用者對
 然而，長期來看，一個合理的評分機制，甚至是一個長期的治理機制也是必要的。在這方面，Chohan等人\cite{chohan2024decentralized}關於DAO（去中心化自治組織，Decentralized Autonomous Organization）治理的研究提供了核心概念，可以為自主身分系統的制度建設提供參考。
 
 在後續的研究中，將探討如何在自主身分系統中實現技術上的互相驗證與制度上的互相信任，最終構建一個能夠平衡各方利益、促進公平競爭而不易壟斷的自主身分生態系統。這種系統將能夠在保護使用者權益的同時，也為系統供應者提供合理的發展空間，從而實現真正的平等信任。
-\section{身分系統的評估}
-鑒於當前身分系統在各個方面面臨的特定挑戰，本研究提出以下評估標準，用以衡量自主身分系統的設計是否符合下一代身分系統的要求：
+\subsection{法律合規性}
+身分系統在設計和實施過程中，除了需要應對技術上的關鍵挑戰外，還必須嚴格遵守相關的法律法規，尤其是在數據保護和隱私保護方面。這些法規旨在確保使用者的權益得到充分保護。以下是兩個具有代表性的法規和標準：
 \begin{itemize}
-  \item \textbf{創新突破}：自主身分系統的設計應解決上節所述困境，才能實現真正的技術創新。以下陳列:
-        \begin{itemize}
-          \item 使用者體驗：提供無摩擦驗證，簡化操作流程，提高系統易用性。
-          \item 使用者認知：提供簡單的身分管理機制，幫助使用者有效管理身分，減少認知負擔。
-          \item 隱私保護：實施有效的隱私保護機制，保護使用者個人數據，確保隱私得到充分保障。
-          \item 平等信任：建立互相驗證和互相信任的機制，促進所有個體間平等的信任關係。
-        \end{itemize}
-  \item \textbf{法規遵循}：自主身分系統應符合相關法律法規，特別是在數據保護和隱私保護方面。例如：
-        \begin{itemize}
-          \item GDPR：遵守一般資料保護規範\cite{GDPR2016}的要求，包括使用者同意、數據可控性和被遺忘權等規定。
-          \item NIST：符合美國國家標準\cite{NIST800-63-3}，涵蓋多因素驗證、風險評估、身分驗證和授權等要求。
-        \end{itemize}
-  \item \textbf{公認原則}：遵循身分識別領域的公認原則，包括但不限於：
-        \begin{itemize}
-          \item 身分法則：符合Kim Cameron提出的身分管理基本法則\cite{cameron2005laws}，包括使用者控制、最小化披露和互操作性等原則。
-          \item 避免常見缺陷：克服Dhamija等人\cite{dhamija2008sevenflaws}指出的身分管理七大缺陷，如使用者體驗、使用者認知、使用者信任等問題。
-          \item 自治身分：符合Allen\cite{allen2016selfsovereign}所說，自治身分應該遵循的10個原則。
-        \end{itemize}
+  \item \textbf{歐盟通用數據保護條例（GDPR）\cite{GDPR2016}：}這是當前全球最嚴格的數據保護法規之一。GDPR要求企業在收集、存儲和使用用戶數據時，必須遵守一系列嚴格的規定，以保護用戶的隱私權和數據安全。
+  \item \textbf{美國國家標準技術研究所（NIST）身分驗證指南 \cite{NIST800-63-3}：}NIST制定了一系列身分驗證標準，涵蓋多因素驗證、風險評估、身分驗證和授權等多個方面。這些標準為身分系統的設計和實施提供了重要的技術指導。
 \end{itemize}
-這些評估標準綜合考慮了技術創新、法律合規性和業界最佳實踐，為評估和設計下一代自主身分系統提供了全面的合理的目標。
+身分系統的開發者和運營者必須充分理解並遵守這些法規和標準，以確保系統的合法性和可靠性，同時有效保護用戶的權益。
+\subsection{公認原則}
+在設計身分系統時，遵循身分識別領域的公認原則至關重要。這些原則為系統設計提供了重要的指導方針，有助於確保系統的合理性和有效性。包括但不限於：
+\begin{itemize}
+  \item \textbf{Kim Cameron的身分管理七大法則\cite{cameron2005laws}：}這些法則涵蓋了使用者控制、最小化披露和互操作性等關鍵概念，為身分管理系統的設計提供了全面的指導。
+  \item \textbf{Dhamija等人提出的身分管理七大缺陷\cite{dhamija2008sevenflaws}：}這項研究指出了身分管理系統中常見的問題，包括使用者體驗、使用者認知和使用者信任等方面的挑戰，為系統設計者提供了重要的警示。
+  \item \textbf{Allen的自主身分十大原則\cite{allen2016selfsovereign}：}這些原則強調了使用者控制、最小化披露和互操作性等概念，與Cameron的法則有所重疊，但更加聚焦於自主身分的特點。
+\end{itemize}
+這些公認原則雖然側重點有所不同，但都都代表了各時期身分系統設計的最佳實踐，值得設計者們深入研究和遵循。
 \section{本章總結}
-本章從身分系統的迭代、設計原則和技術評估三個方面探討了現代身分系統的設計問題。本研究發現，現代身分系統的設計仍面臨著諸多挑戰，包括使用者體驗、使用者認知、隱私保護、平等信任等方面。為了解決這些問題，本研究提出了一系列設計原則，包括無摩擦驗證、隱私設計、使用者認知簡化、......等。在接下來的章節，本研究將進一步探討如何在自主身分系統中達到這些評估標準，並提出相應的技術解決方案。
+本章回顧了現有的身分系統設計，並探討了身分系統在使用者體驗、使用者認知、隱私保護、平等信任、法律合規性和公認原則等方面面臨的挑戰。這些討論有助於釐清身分系統的核心特徵，為未來的設計提供參考。在下一章中，將提出一個新的自主身分系統設計，以應對現有身分系統的挑戰。
