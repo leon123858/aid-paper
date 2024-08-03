@@ -1,8 +1,83 @@
 % !TeX root = ../main.tex
 
 \chapter{系統設計}
-自主身分（AID）系統是一種更進步的身分管理方案，其核心理念在於讓每位使用者在具備\textbf{動態道德標準}的身分系統中\textbf{自由的管理自己}，從而解決現有身分管理系統的問題。本章節將深入探討如何通過核心機制的設計將這一理念融入系統中，同時闡述系統的完整架構設計、資安與隱私議題和資料結構，為AID系統的實際應用奠定理論基礎。
-\section{對AID系統的新設計}
+自主身分（AID）是\textbf{由使用者個人裝置管理的網路唯一身份}，其核心理念在於讓每位使用者在具備\textbf{動態道德標準}的身分系統中\textbf{自由的管理自己}，從而解決現有身分管理系統的問題。本章節將深入探討如何通過核心機制的設計將這一理念融入系統中，同時闡述系統的完整架構設計、資安與隱私議題和資料結構，為AID系統的實際應用奠定理論基礎。
+\section{AID系統的新設計}
+由Yuxuan\cite{ntu-lin2014autonomous}提出的AID系統可以被總結成三個方向的設計，包含自主認證、數據自主和信用評分等。本研究將進一步探討這些設計的具體內容，並提出一些新的設計思路。
+\subsection{自主認證}
+自主認證是AID系統的核心，畢竟如果使用者連登入都被其他人掌握，那麼談何自主。使用者認證流程的本質可以被理解為使用者向驗證方證明「認證因素」\cite{AlQahtani2021AF}的擁有權。本研究首先提出可以利用以下函數定義描述認證流程的本質：
+\begin{itemize}
+  \item Function Definitions:
+  \begin{itemize}
+      \item generate: $\emptyset \rightarrow (AID, token)$
+      \item verify: $(AID, token) \rightarrow \{0,1\}$ \hfill // 0: fail, 1: pass
+  \end{itemize}
+  \item System relationship:
+  \begin{itemize}
+      \item $\forall(AID, token) = \text{generate}()$
+      \item $\text{verify}(AID, token) = 1$
+  \end{itemize}
+\end{itemize}
+這個函數定義了一個認證的過程，使用者可以通過generate函數獲取一個AID和token，這個token伴隨AID產生，可以作為AID的認證因素。因此verify函數只要檢測到token和AID的對應關係即可通過認證。
+
+在傳統身分管理系統中，這樣的定義已經足以應對認證需求，但是在自主認證中，這樣的定義還不夠。因為使用者期待可以在個人裝置管理自己的身份，因此不可以把認證所需的訊息（即token）傳送到其他地方，畢竟這樣一來就稱不上由使用者自主掌握認證因素。最後我們提出以下模型來描述自主認證的最簡過程：
+\begin{itemize}
+  \item Function Definitions:
+  \begin{itemize}
+      \item generate: $\emptyset \rightarrow (AID, token)$
+      \item proof: $token \rightarrow one\text{-}time\text{-}proof$
+      \item verify: $(AID, one\text{-}time\text{-}proof) \rightarrow \{0,1\}$ \hfill // 0: fail, 1: pass
+  \end{itemize}
+  \item System relationship:
+  \begin{itemize}
+      \item $\forall(AID, token) = \text{generate}()$
+      \item $\forall one\text{-}time\text{-}proof = \text{proof}(token)$
+      \item $\text{verify}(AID, one\text{-}time\text{-}proof) = 1$
+  \end{itemize}
+\end{itemize}
+這個模型中，本研究新增了proof函數，這個函數可以將token轉換為一次性的證明，這樣使用者就可以在不暴露token的情況下進行認證。這樣的設計可以保護使用者的自主性，同時確保認證的安全性。
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth,keepaspectratio]{figures/min-aid.png}
+  \caption{最簡自主認證}
+  \label{fig:min-aid}
+\end{figure}
+基於上方的推演，本研究提出了符合AID價值觀的最簡單認證方案如圖\ref{fig:min-aid}，這個方案可以在不暴露完整認證因素的情況下進行認證，從而實現自主認證的目標。其實務上的案例可以是透過公私鑰對或零知識證明等可以實作上述模型的技術達成，例如將token視為私鑰，AID視為公鑰，數位簽名視為one-time-proof就是一個簡單的實作方式。
+
+然而，這樣的最小設計並不足以解決身份管理領域更深入的難題，就像Bonneau\cite{bonneau2012mfa}等人所說的，單一的私鑰或帳號密碼等認證方案並不能滿足現今嚴峻的安全需求，只有允許了多因素認證（MFA）的設計才能更好地保護使用者的身份。甚至，NIST標準也特別強調了MFA的重要性\cite{NIST800-63-3}。因此，本研究進一步提出了一個更為完整的自主認證方案模型如下，這個方案可以支持多種認證因素，從而提高了認證的安全性和可靠性。
+\begin{itemize}
+  \item Function Definitions:
+  \begin{itemize}
+      \item generate: $\emptyset \rightarrow (AID)$
+      \item bind: $(AID, token) \rightarrow AID$
+      \item proof: $token \rightarrow one\text{-}time\text{-}proof$
+      \item verify: $(AID, one\text{-}time\text{-}proof) \rightarrow \{0,1\}$ \hfill // 0: fail, 1: pass
+  \end{itemize}
+  \item System relationship:
+  \begin{itemize}
+      \item $\forall one\text{-}time\text{-}proof = \text{proof}(token)$
+      \item $\text{verify}(\text{bind}(AID, token), one\text{-}time\text{-}proof) = 1$
+  \end{itemize}
+\end{itemize}
+除了把產生AID流程的獨立，近一步增加bind函數，這個函數可以把不同的認證因素(token)綁定到AID上，從而實現多因素認證的目標。這樣的模型設計，看似完善卻無形中增加了系統的複雜度，因為在現有的密碼學技術下，我們很難在數學上證明某個認證因素與獨立產生的AID之間的關聯，於是必須要依賴更複雜的系統設計和實作來達成。當然，也有類似Wang等人\cite{Wang2013ThresholdSignatureSchemes}提出的門限簽名方案可以在產生單一公鑰的同時，生成多個私鑰，這樣的方案可以在不需要額外bind機制下實現上述模型的設計，但是這樣的方案有許多限制，在實務上實在很難被視為完整的實作了MFA解決方案。
+
+Yuxuan所設計的AID系統\cite{ntu-lin2014autonomous}可以被視作上述模型的一個實作，使用者在個人裝置上產生UUID\cite{uuid}並且將之視為自己的唯一識別號，接著因為UUID不具備可以被認證的特性，所以使用者額外在個人裝置上產生一對公私鑰，並且將公鑰與UUID一起上傳到中心化AID Server中產生連結，之後使用者認證時只要透過私鑰完成簽名就可以證明自己的身份，因為驗證者可以到AID Server中獲取對應UUID的公鑰來認證簽名。此外，中心化的AID Server也解決了兩個基礎設計沒有辦法克服的問題：全球化問題與身份強佔問題。
+\begin{itemize}
+  \item 全球化問題：儘管產生UUID的重複機率極低，但是在實際生產場景下，存在著惡意使用者可能刻意產生相同的UUID，從而導致身份混淆的問題。因此，AID Server可以確保每個傳入的UUID都是唯一的，拒絕相同UUID的綁定請求。
+  \item 身份強佔問題：作為全球化問題的延伸，身份強佔問題是指惡意使用者可能會在UUID的真實擁有者尚未使用特定服務前，先行綁定該UUID，從而導致真實擁有者無法使用該服務的問題。通過讓使用者進入服務時向AID Server確認UUID公鑰的方式，可以有效解決這個問題。
+\end{itemize}
+
+深入探討上述流程，本研究發現了一些問題，首先，中心化的AID Server雖然解決了全球化問題與身份強佔問題，但是卻引入了新的問題：\textbf{單點故障}。當AID Server發生故障時，所有使用者的認證都將受到影響，這將導致系統的不可用。其次，中心化的AID Server也無法滿足AID系統的核心理念：\textbf{自主}。使用者無法完全自主管理自己的身份，而是需要依賴中心化的AID Server提供的連結能力才能完成認證。為了解決這些問題，本研究提出以下原則希望能夠重新設計AID系統：
+\begin{itemize}
+  \item \textbf{去中心化}：把區塊鏈技術應用到AID系統的實作中，從而消除中心化的AID Server，實現系統的高可用性和可信任。
+  \item \textbf{去依賴性}：使用者認證時不應該要求服務到AID Server搜索綁定UUID的公鑰，而應該是讓使用者自主宣告綁定的公鑰等關聯認證因素，AID Server只負責記錄這個宣告，作為額外的保證。
+\end{itemize}
+
+最後，單純的加入區塊鏈技術取代AID Server並不是沒有缺點，除了區塊鏈技術的性能限制外，還有一個更為重要的問題：\textbf{隱私}。區塊鏈技術的特性決定了所有的交易都是公開的，這將導致使用者的綁定關係被公開，進而影響使用者的隱私。過去的設計中僅使用公鑰作為綁定因素尚無隱私問題，但MFA機制中常用的手機驗證碼、信箱驗證碼等都是私密資訊，這樣的設計將導致使用者的隱私受到威脅。因此，本研究進一步配合學長Tze-Nan\cite{NTU202102846}設計的自主憑證技術來解決這個問題，這個技術要求在區塊鏈上記錄的是經過雜湊的憑證，而不是直接的多個認證因素，這樣的設計確保直接讀取區塊鏈無法獲得使用者的隱私資訊，同時要完成認證的話，需要使用者自行提供憑證給驗證者，驗證者檢查憑證的雜湊是否存在於區塊鏈中，從而確保憑證的真實性。
+
+綜上所述，本研究提出了一個新的自主認證方案，這個方案基於區塊鏈技術，去中心化地實現了使用者的自主認證，同時保護了使用者的隱私。
+
 \section{系統信任機制}
 為了實現AID系統的核心理念，本研究需要深入理解\textbf{動態道德標準}與\textbf{自由的管理自己}這兩個關鍵概念，並將其轉化為具體的技術機制。
 \subsection{關鍵概念}
