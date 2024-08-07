@@ -667,10 +667,18 @@
 % [生成封面]
 % Generate the cover page
 %
+\newcommand{\titlepagebackground}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    % 背景填充: 使 titlepage 不蓋掉 watermark
+    \fill[white, opacity=0.25] (current page.south west) rectangle (current page.north east);
+  \end{tikzpicture}%
+}
+
 \newcommand{\makecover}{
   \ntu@setgeometry{\ntu@geometry@cover}
 
   \begin{titlepage}
+    \titlepagebackground
     \begin{singlespace}
       \begin{center}
         % 中文校系名稱 (18, 27)
@@ -898,4 +906,6 @@
 
 % 中文化
 % \newcommand{\loflabel}{圖}
+\renewcommand{\figurename}{圖}
 % \newcommand{\lotlabel}{表}
+\renewcommand{\tablename}{表}

@@ -9,7 +9,7 @@
   language  = chinese,              % language = chinese | english
   fontset   = template,             % fontset = default | template
   watermark = true,                 % watermark = true | false
-  doi       = false,                % doi = true | false
+  doi       = true,                % doi = true | false
 ]{ntuthesis}
 
 \input{ntusetup}
@@ -19,7 +19,8 @@
 % 封面與口試審定
 % Cover and Verification Letter
 \makecover                          % 論文封面（Cover）
-\makeverification                   % 口試委員審定書（Verification Letter）
+% \makeverification                   % 口試委員審定書（Verification Letter）
+\includepdf[pages={1}]{docs/sign.pdf} % 真正口委簽名掃描
 
 % 致謝與論文摘要
 % Acknowledgement and Abstract
@@ -31,7 +32,6 @@
 \maketableofcontents                % 目錄（Table of Contents）
 \makelistoffigures                  % 圖目錄（List of Figures）
 \makelistoftables                   % 表目錄（List of Tables）
-%\input{front/denotation}            % 符號列表（Denotation）
 
 % 論文內容
 % Contents of Thesis
