@@ -1,7 +1,7 @@
 % !TeX root = ../main.tex
 
 \chapter{文獻探討}
-「數位身分」可以被用於在網路上標識一個人，一種物體，甚至一個機構。更準確的說，數位身分是一組屬性，包含了對應實體的資訊與唯一識別號（identity,ID）。而「數位身分系統」是一套用於創建、管理和驗證「數位身分」的技術和流程集合。本研究探討的AID系統即是一種數位身分系統，旨在解決當前身分系統中存在的問題，並提出一套完整的解決方案。
+「數位身分」可以被用於在網路上標識一個人，一種物體，甚至一個機構。更準確的說，數位身分是一組屬性，包含了對應實體的資訊與唯一識別號（identity,ID）。本研究探討的AID系統，旨在解決當前「數位身分」存在的問題，並提出一套完整的解決方案。
 
 本章節闡述了理解自主身分（Autonomous Identity, AID）系統所需的關鍵背景知識。首先，本章將探討身分系統的起源，以此更進一步說明「自主」的設計理念。其次，本章將回顧身分系統的迭代過程，從中心化模式到自治身分，分析各代系統的特徵及其優劣。繼而，本章將聚焦於AID系統的發展軌跡，探討其起源與演變。最後，本章將詳細闡述身分系統設計面臨的多維度挑戰，包含使用者體驗、使用者認知、隱私保護、平等信任、法律合規性和公認原則等方面。通過這些多角度的探討，本章為讀者構建一個全面的理論框架，為後續對AID系統的深入分析和評估奠定基礎。
 \section{身分系統的起源}
@@ -27,27 +27,27 @@
   \resizebox{\textwidth}{!}{
     \begin{tabular}{lccccc}
       \hline
-      需求          & 中心化身分       & 聯合身分        & 使用者中心的身分    & 自治身分        & 自主身分        \\
+      需求          & 中心化身分       & 聯合身分        & 使用者中心的身分    & 自治身分        \\
       \hline
-      數據集中問題      & \checkmark  & $\times$    & \checkmark  & \checkmark  & \checkmark  \\
-      資料孤島化       & $\times$    & $\triangle$ & $\triangle$ & \checkmark  & \checkmark  \\
-      組織身分控管      & \checkmark  & \checkmark  & $\triangle$ & $\times$    & \checkmark  \\
-      便於系統管理      & \checkmark  & \checkmark  & \checkmark  & $\times$    & $\triangle$ \\
-      系統管理一致性     & \checkmark  & \checkmark  & \checkmark  & $\times$    & $\triangle$ \\
-      減少多重身分認知負擔  & $\times$    & $\triangle$ & $\triangle$ & \checkmark  & \checkmark  \\
-      實現單點登錄（SSO） & $\times$    & \checkmark  & \checkmark  & \checkmark  & \checkmark  \\
-      促進組織間協作     & $\times$    & $\triangle$ & $\triangle$ & $\times$    & \checkmark  \\
-      降低運營成本      & \checkmark  & $\times$    & \checkmark  & $\triangle$ & \checkmark  \\
-      增強隱私保護      & $\times$    & $\times$    & $\triangle$ & \checkmark  & \checkmark  \\
-      使用者身分資料控制權  & $\times$    & $\times$    & $\triangle$ & \checkmark  & \checkmark  \\
-      身分提供者選擇靈活性  & $\times$    & $\times$    & \checkmark  & \checkmark  & \checkmark  \\
-      服務數據控制權     & $\times$    & $\times$    & $\times$    & $\times$    & \checkmark  \\
-      身分可攜性       & $\times$    & $\times$    & $\triangle$ & \checkmark  & \checkmark  \\
-      使用者與服務商平等性  & $\times$    & $\times$    & $\times$    & \checkmark  & \checkmark  \\
-      抗審查特性       & $\times$    & $\times$    & $\times$    & \checkmark  & \checkmark  \\
-      符合現有法律框架    & $\triangle$ & $\triangle$ & $\triangle$ & $\times$    & \checkmark  \\
-      高易用性        & \checkmark  & \checkmark  & \checkmark  & $\times$    & \checkmark  \\
-      系統互操作性      & $\times$    & $\times$    & \checkmark  & \checkmark  & \checkmark  \\
+      數據集中問題      & \checkmark  & $\times$    & \checkmark  & \checkmark  \\
+      資料孤島化       & $\times$    & $\triangle$ & $\triangle$ & \checkmark  \\
+      組織身分控管      & \checkmark  & \checkmark  & $\triangle$ & $\times$    \\
+      便於系統管理      & \checkmark  & \checkmark  & \checkmark  & $\times$    \\
+      系統管理一致性     & \checkmark  & \checkmark  & \checkmark  & $\times$    \\
+      減少多重身分認知負擔  & $\times$    & $\triangle$ & $\triangle$ & \checkmark  \\
+      實現單點登錄（SSO） & $\times$    & \checkmark  & \checkmark  & \checkmark  \\
+      促進組織間協作     & $\times$    & $\triangle$ & $\triangle$ & $\times$    \\
+      降低運營成本      & \checkmark  & $\times$    & \checkmark  & $\triangle$ \\
+      增強隱私保護      & $\times$    & $\times$    & $\triangle$ & \checkmark  \\
+      使用者身分資料控制權  & $\times$    & $\times$    & $\triangle$ & \checkmark  \\
+      身分提供者選擇靈活性  & $\times$    & $\times$    & \checkmark  & \checkmark  \\
+      服務數據控制權     & $\times$    & $\times$    & $\times$    & $\times$    \\
+      身分可攜性       & $\times$    & $\times$    & $\triangle$ & \checkmark  \\
+      使用者與服務商平等性  & $\times$    & $\times$    & $\times$    & \checkmark  \\
+      抗審查特性       & $\times$    & $\times$    & $\times$    & \checkmark  \\
+      符合現有法律框架    & $\triangle$ & $\triangle$ & $\triangle$ & $\times$    \\
+      高易用性        & \checkmark  & \checkmark  & \checkmark  & $\times$    \\
+      系統互操作性      & $\times$    & $\times$    & \checkmark  & \checkmark  \\
       \hline
     \end{tabular}}
 \end{table}
@@ -125,7 +125,7 @@
 \end{figure}
 本研究採用的AID系統自主憑證機制(Autonomous Certificate, AC)源自學長Tze-Nan\cite{NTU202102846}的研究成果。該機制旨在增強AID系統的數據自主性，並提升使用者隱私保護水平。Tze-Nan不僅闡述了AC機制的應用場景，還詳細闡釋了其設計原則與實現方法。
 
-AC機制如圖\ref{fig:old-ac}所示可以看作是建構於AID系統之上的公鑰基礎設施（Public Key Infrastructure，PKI）擴展方案。使用者可以尋求AC機構簽發包含使用者特定資訊的憑證，其格式應類似傳統的X.509憑證\cite{itu-t-rec-x509}。這些憑證包含了簽發AC機構的數位簽名、AC有效期限與對應AID身分資訊等等。
+AC機制如圖\ref{fig:old-ac}所示可以看作是建構於AID系統之上的公鑰基礎設施（Public Key Infrastructure，PKI）擴展方案。使用者可以尋求AC機構簽發包含使用者特定資訊的憑證，這些憑證包含了簽發AC機構的數位簽名、AC有效期限與對應AID身分資訊等等。
 
 這種自主憑證機制有效替代AID系統原設計中的角色資料（actor profile）。它使得使用者能夠根據具體需求，自行定義在特定服務中欲揭露的個人資料範疇，並尋求特定AC機構的背書。這一機制不僅提升了使用者提供之角色資訊的可信度，還增強了整體系統的靈活性。此外，AC機制亦提供自行簽署的功能，允許使用者在無需AC機構背書的情況下自主簽署憑證。這一設計確保了AID系統不會因引入AC機制而損及其原有的自主性原則。
 
@@ -186,4 +186,26 @@ Dhamija等人\cite{dhamija2008sevenflaws}的研究進一步指出，使用者對
 \end{itemize}
 這些公認原則雖然側重點有所不同，但都都代表了各時期身分系統設計的最佳實踐，值得設計者們深入研究和遵循。
 \section{本章總結}
-本章回顧了現有的身分系統設計，並探討了身分系統在使用者體驗、使用者認知、隱私保護、平等信任、法律合規性和公認原則等方面面臨的挑戰。這些討論有助於釐清身分系統的核心特徵，為未來的設計提供參考。在下一章中，將提出一個新的自主身分系統設計，以應對現有身分系統的挑戰。
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+    \hline
+    \textbf{挑戰類別} & \textbf{主要問題} \\
+    \hline
+    使用者體驗         & 安全性、隱私和易用性的平衡 \\
+    \hline
+    使用者認知         & 認知偏差導致不安全行為   \\
+    \hline
+    隱私保護          & 符合GDPR等法規要求   \\
+    \hline
+    平等信任          & 多方利益衝突        \\
+    \hline
+    法律合規性         & 遵守相關法規和標準     \\
+    \hline
+    遵循公認原則        & 確保系統設計的合理性    \\
+    \hline
+  \end{tabular}
+  \caption{身份系統的挑戰概覽}
+  \label{tab:identity-system-challenges}
+\end{table}
+本章回顧了現有的身分系統設計，並探討了身分系統在使用者體驗、使用者認知、隱私保護、平等信任、法律合規性和公認原則等方面面臨的挑戰（如表\ref{tab:identity-system-challenges}）。這些討論有助於釐清身分系統的核心特徵，為未來的設計提供參考。在下一章中，將提出一個新的自主身分系統設計，以應對現有身分系統的挑戰。
