@@ -79,8 +79,10 @@
 
 % 變數: 版面設定
 % Variables: Layouts
-\newcommand{\ntu@geometry@main}{top=3cm, bottom=2cm, left=3cm, right=3cm}
-\newcommand{\ntu@geometry@cover}{top=3cm, bottom=3cm, left=3cm, right=3cm}
+% \newcommand{\ntu@geometry@main}{top=3cm, bottom=2cm, left=3cm, right=3cm}
+% \newcommand{\ntu@geometry@cover}{top=3cm, bottom=3cm, left=3cm, right=3cm}
+\newcommand{\ntu@geometry@main}{top=1.2cm, bottom=0.8cm, left=1.2cm, right=1.2cm}
+\newcommand{\ntu@geometry@cover}{top=1.6cm, bottom=1.2cm, left=1.2cm, right=1.2cm}
 
 \newcommand{\ntu@tocvspace}{1em}
 \newcommand{\ntu@tocchaptersize@zh}{4.5em}
@@ -221,7 +223,7 @@
 \newcommand\ntu@date@zh@short[3]{\zhdigits{#1}年\zhnumber{#2}月}
 \newcommand\ntu@date@zh@digit[3]{\the\numexpr#1-1911\relax~年~\number#2~月~\number#3~日}
 \newcommand\ntu@date@zh@digit@short[3]{\the\numexpr#1-1911\relax~年~\number#2~月}
-\newcommand\ntu@date@en@short[3]{\monthname[#2], #1}
+\newcommand\ntu@date@en@short[3]{\monthname[#2] #1}
 
 \newcommand{\ntu@setgeometry}[1]{\expandafter\newgeometry\expandafter{#1}}
 
