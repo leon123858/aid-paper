@@ -79,9 +79,9 @@
 
 % 變數: 版面設定
 % Variables: Layouts
-% \newcommand{\ntu@geometry@main}{top=3cm, bottom=2cm, left=3cm, right=3cm}
+\newcommand{\ntu@geometry@main}{top=3cm, bottom=2cm, left=3cm, right=3cm}
 % \newcommand{\ntu@geometry@cover}{top=3cm, bottom=3cm, left=3cm, right=3cm}
-\newcommand{\ntu@geometry@main}{top=1.2cm, bottom=0.8cm, left=1.2cm, right=1.2cm}
+% \newcommand{\ntu@geometry@main}{top=1.2cm, bottom=0.8cm, left=1.2cm, right=1.2cm}
 \newcommand{\ntu@geometry@cover}{top=1.6cm, bottom=1.2cm, left=1.2cm, right=1.2cm}
 
 \newcommand{\ntu@tocvspace}{1em}
