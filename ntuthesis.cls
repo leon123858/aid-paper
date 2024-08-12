@@ -773,6 +773,18 @@
   \restoregeometry
 }
 
+\newcommand{\makeverificationcustom}{
+  \clearpage
+  \phantomsection
+  \ntu@setgeometry{\ntu@geometry@main}
+  \pagenumbering{roman}
+  \addcontentsline{toc}{chapter}{\ntu@verificationletter}
+  % 真實簽名 pdf 限 1 page
+  \includepdf[pages={1}]{docs/sign.pdf} % 真正口委簽名掃描
+  % 恢復預設板型
+  \restoregeometry
+}
+
 % [生成目錄]
 % Generate table of contents page.
 %
